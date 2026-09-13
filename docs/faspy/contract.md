@@ -13,11 +13,14 @@ respuesta en su bloque `docs`:
 | --- | --- | --- |
 | `GET /api/health` | [`health.yml`](./collections/api/health.yml) | Implementada y ejecutable |
 | `OPTIONS /api/health` | [`health-options.yml`](./collections/api/health-options.yml) | Implementada y ejecutable |
-| `POST /api/emitir-factura` | [`emitir-factura.yml`](./collections/api/emitir-factura.yml) | Contrato documentado; endpoint pendiente |
+| `POST /api/emitir-factura` | [`emitir-factura.yml`](./collections/api/emitir-factura.yml) | Implementada y ejecutable |
+| `OPTIONS /api/emitir-factura` | [`emitir-factura-options.yml`](./collections/api/emitir-factura-options.yml) | Implementada y ejecutable |
 | `POST /api/aceptar-anticipo` | [`aceptar-anticipo.yml`](./collections/api/aceptar-anticipo.yml) | Contrato documentado; endpoint pendiente |
 | `POST /api/simular-pago` | [`simular-pago.yml`](./collections/api/simular-pago.yml) | Contrato documentado; endpoint pendiente |
-| `GET /api/compliance/audit` | [`compliance-audit.yml`](./collections/api/compliance-audit.yml) | Contrato documentado; endpoint pendiente |
-| `POST /api/scoring/simulate` | [`scoring-simulate.yml`](./collections/api/scoring-simulate.yml) | Contrato documentado; endpoint pendiente |
+| `GET /api/compliance/audit` | [`compliance-audit.yml`](./collections/api/compliance-audit.yml) | Implementada y ejecutable |
+| `OPTIONS /api/compliance/audit` | [`compliance-audit-options.yml`](./collections/api/compliance-audit-options.yml) | Implementada y ejecutable |
+| `POST /api/scoring/simulate` | [`scoring-simulate.yml`](./collections/api/scoring-simulate.yml) | Implementada y ejecutable |
+| `OPTIONS /api/scoring/simulate` | [`scoring-simulate-options.yml`](./collections/api/scoring-simulate-options.yml) | Implementada y ejecutable |
 
 ---
 
@@ -41,7 +44,7 @@ Respuesta plana que incluye el informe de cumplimiento fiscal y la oferta de fac
 
 ```json
 {
-  "factura_id": "FAC-2026-001",
+  "factura_id": "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e",
   "cfdi_status": "VIGENTE",
   "efos_status": "LIMPIO",
   "score": "ALTO",
@@ -56,10 +59,56 @@ Respuesta plana que incluye el informe de cumplimiento fiscal y la oferta de fac
 - `clabe_virtual`: Cadena literal (`string`) de 18 dígitos, nunca formateada como número para preservar ceros a la izquierda.
 - `tasa_aplicada`: Fracción numérica (ej. `0.02` representa 2%).
 - `decision`: Unión `"aprobada" | "revision" | "rechazada"`.
+- `factura_id`: Identificador determinista `FAC-` seguido del UUID recibido en minúsculas.
+- La CLABE es ficticia y se devuelve como string aun sin oferta; su presencia no implica aprobación ni desembolso.
+- Cuando no hay oferta, `monto_anticipo` y `tasa_aplicada` valen `0`. Para un pagador desconocido,
+  `dias_promedio_pago` vale `0` y `efos_status` se adapta a `LIMPIO`, mientras `decision` conserva `revision`.
+
+La ruta espera el body plano `EmitirFacturaRequest`, valida JSON, campos, tipos, monto y plazo,
+ejecuta el motor determinista y simula 700 ms de validación. Un RFC o UUID no vacío con sintaxis
+inválida no es un error HTTP: el motor lo devuelve como rechazo con status 200. JSON inválido,
+campos ausentes, tipos incorrectos, monto inválido y plazos distintos de 30/60/90 devuelven
+`ApiError` con status 400.
 
 ---
 
-## 2. Aceptación de Anticipo (`POST /api/aceptar-anticipo`)
+## 2. Auditoría de cumplimiento (`GET /api/compliance/audit`)
+
+No requiere body. Devuelve los 18 registros históricos precargados sin recalcularlos ni agregar
+emisiones nuevas. Cada registro conserva los campos compartidos y los campos adicionales de
+auditoría `plazo_dias`, `ofac_status` y `motivo_decision`.
+
+## 3. Simulación de scoring (`POST /api/scoring/simulate`)
+
+Recibe `rfc_cliente`, `monto_mxn` y `plazo_dias` (30, 60 o 90), y devuelve la misma composición
+de scoring y oferta que la emisión, sin validar un CFDI, sin latencia y sin registrar facturas.
+También aplica los bloqueos sintéticos EFOS, EDOS y OFAC.
+
+### Request
+
+```json
+{
+  "rfc_cliente": "DIN890214ABC",
+  "monto_mxn": 150000,
+  "plazo_dias": 60
+}
+```
+
+### Response esperada · 200 OK
+
+```json
+{
+  "score": "ALTO",
+  "decision": "aprobada",
+  "dias_promedio_pago": 32,
+  "monto_anticipo": 132300,
+  "tasa_aplicada": 0.02
+}
+```
+
+Los casos en revisión o rechazo no reciben oferta: `monto_anticipo` y `tasa_aplicada` son `0`.
+
+## 4. Aceptación de Anticipo (`POST /api/aceptar-anticipo`)
 
 ### Request (`AceptarAnticipoRequest`)
 ```json
@@ -80,7 +129,7 @@ Respuesta plana que incluye el informe de cumplimiento fiscal y la oferta de fac
 
 ---
 
-## 3. Simulación de Liquidación / Cobro (`POST /api/simular-pago`)
+## 5. Simulación de Liquidación / Cobro (`POST /api/simular-pago`)
 
 Ejemplo legado independiente, no encadenable con la nueva oferta de emisión.
 La política de liquidación y la discrepancia entre porcentaje/fracción de

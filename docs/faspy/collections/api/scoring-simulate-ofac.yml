@@ -1,7 +1,7 @@
 info:
-  name: Simular scoring (contrato)
+  name: Simular scoring (bloqueo OFAC)
   type: http
-  seq: 7
+  seq: 9
 http:
   method: POST
   url: http://localhost:3000/api/scoring/simulate
@@ -12,7 +12,7 @@ http:
       value: application/json
   body:
     type: json
-    data: '{"rfc_cliente":"DIN890214ABC","monto_mxn":150000,"plazo_dias":60}'
+    data: '{"rfc_cliente":"COM760315QRS","monto_mxn":100000,"plazo_dias":30}'
 runtime:
   assertions:
     - expression: res.status
@@ -23,41 +23,28 @@ runtime:
       value: ALTO
     - expression: res.body.decision
       operator: eq
-      value: aprobada
+      value: rechazada
     - expression: res.body.dias_promedio_pago
       operator: eq
-      value: "32"
+      value: "38"
     - expression: res.body.monto_anticipo
       operator: eq
-      value: "132300"
+      value: "0"
     - expression: res.body.tasa_aplicada
       operator: eq
-      value: "0.02"
+      value: "0"
 docs: |
-  Recalcula el score desde el simulador del dashboard. No valida un CFDI, no
-  agrega latencia y no registra facturas; sí aplica bloqueos EFOS, EDOS y OFAC.
-
-  ### Petición
-
-  ```json
-  {
-    "rfc_cliente": "DIN890214ABC",
-    "monto_mxn": 150000,
-    "plazo_dias": 60
-  }
-  ```
+  La coincidencia OFAC bloquea la oferta aunque el score crediticio sea ALTO y
+  el estado fiscal SAT sea LIMPIO.
 
   ### Respuesta esperada · 200 OK
 
   ```json
   {
-  "score": "ALTO",
-  "decision": "aprobada",
-  "dias_promedio_pago": 32,
-  "monto_anticipo": 132300,
-  "tasa_aplicada": 0.02
+    "score": "ALTO",
+    "decision": "rechazada",
+    "dias_promedio_pago": 38,
+    "monto_anticipo": 0,
+    "tasa_aplicada": 0
   }
   ```
-
-  Los casos en revisión o rechazo devuelven `monto_anticipo: 0` y
-  `tasa_aplicada: 0`.

@@ -55,11 +55,13 @@ residuos de un centavo al sumar conceptos. No es un libro contable de liquidaci�
 Referencia DIN890214ABC, $150,000, 60 días: 90 puntos, ALTO, aprobada,
 32 días promedio, tasa 0.02, anticipo $132,300, descuento $2,700, reserva $15,000.
 
-## Verificación e integración pendiente
+## Verificación e integración
 
 `pnpm test` cubre reglas y composición en `tests/engine.test.mts`; `pnpm check`
-añade lint, tipos y build. Endpoints, generación de ID/CLABE, serialización de
-resultados desconocidos y latencia de 700 ms son de la tarea 1.4. No se agregan
-campos a `types/schema.ts`. Bruno actualiza emisión/anticipo; el ejemplo de
-liquidación queda explícitamente legado e independiente hasta definir ese flujo
-con el ERP (incluida la unidad de `margen_neto_pct`).
+añade lint, tipos y build. La capa API integra los endpoints, generación de
+ID/CLABE, serialización de resultados desconocidos y latencia de 700 ms; sus
+handlers y escenarios HTTP se cubren en `tests/api.test.mts` y `scripts/smoke.mjs`.
+No se agregan campos a `types/schema.ts`. Bruno documenta emisión, auditoría,
+scoring, errores y preflight. El ejemplo de liquidación queda explícitamente
+legado e independiente hasta definir ese flujo con el ERP (incluida la unidad
+de `margen_neto_pct`).

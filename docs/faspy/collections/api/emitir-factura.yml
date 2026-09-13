@@ -20,7 +20,7 @@ runtime:
       value: "200"
     - expression: res.body.factura_id
       operator: eq
-      value: FAC-2026-001
+      value: FAC-4a71d8be-b51f-46df-9a84-18ef5560965e
     - expression: res.body.cfdi_status
       operator: eq
       value: VIGENTE
@@ -39,10 +39,12 @@ runtime:
     - expression: res.body.dias_promedio_pago
       operator: eq
       value: "32"
+    - expression: res.body.clabe_virtual
+      operator: eq
+      value: "012180001234567890"
 docs: |
-  Contrato esperado para emitir y validar una factura. Esta request quedará
-  ejecutable cuando se implemente POST /api/emitir-factura; actualmente es una
-  referencia de integración y responderá 404.
+  Emite y valida una factura contra los catálogos sintéticos. La respuesta se
+  calcula de forma determinista y la ruta simula 700 ms de validación.
 
   El body es plano: no debe envolverse en `invoice` ni `data`. `monto_mxn` es un
   número positivo, `plazo_dias` usa 30, 60 o 90, y `uuid_cfdi` es un UUID del CFDI.
@@ -63,7 +65,7 @@ docs: |
 
   ```json
   {
-    "factura_id": "FAC-2026-001",
+    "factura_id": "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e",
     "cfdi_status": "VIGENTE",
     "efos_status": "LIMPIO",
     "score": "ALTO",
@@ -76,4 +78,5 @@ docs: |
   ```
 
   `clabe_virtual` debe regresar como string para conservar ceros iniciales y
-  `tasa_aplicada` es una fracción: `0.02` representa 2%.
+  `tasa_aplicada` es una fracción: `0.02` representa 2%. La CLABE ficticia se
+  devuelve incluso en casos sin oferta; no implica aprobación ni desembolso.

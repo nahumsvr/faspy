@@ -8,13 +8,16 @@
 
 ## 1. Diagnóstico del Estado Actual ("Qué tenemos ahorita")
 
-Se realizó un recorrido completo del código, build y pruebas (`pnpm check` pasó al 100% en verde). El repositorio se encuentra actualmente en la fase de **fundación arquitectónica limpia (Scaffolding)**:
+Se realizó un recorrido completo del código, build y pruebas (`pnpm check` pasó al 100% en verde). El repositorio mantiene la base arquitectónica limpia y ya tiene el frente P1 de API 1.4 integrado:
 
 ```
 faspy/
 ├── app/
 │   ├── api/
-│   │   └── health/route.ts          ✅ OK (Healthcheck + CORS validado)
+│   │   ├── health/route.ts          ✅ OK (Healthcheck + CORS validado)
+│   │   ├── emitir-factura/route.ts  ✅ Emisión + cumplimiento + oferta + 700 ms
+│   │   ├── compliance/audit/route.ts ✅ Auditoría histórica de 18 registros
+│   │   └── scoring/simulate/route.ts ✅ Scoring/oferta sin CFDI ni latencia
 │   ├── dashboard/
 │   │   ├── layout.tsx               🟡 Shell básico (sin estética táctil/clay completa)
 │   │   ├── page.tsx                 🟡 Placeholder ("En preparación")
@@ -35,8 +38,8 @@ faspy/
 ├── styles/
 │   └── tokens.css                   ✅ Tokens de color y sombras según DESIGN.md
 └── tests/ & scripts/
-    ├── api.test.mts                 ✅ Pruebas unitarias de CORS y respuestas JSON
-    └── smoke.mjs                    ✅ Smoke tests HTTP activos
+    ├── api.test.mts                 ✅ Pruebas de CORS, handlers y respuestas JSON
+    └── smoke.mjs                    ✅ Smoke tests HTTP de API y dashboard
 ```
 
 ### Resumen del avance actual vs MVP:
@@ -46,7 +49,7 @@ faspy/
 | **Contrato de Datos (`types/schema.ts`)** | Sincronizado al 100% con `erp-faspy` (CFDI, Factoraje, Compliance, Scoring, Anticipo y Liquidación). | Contrato CFDI, Factoraje, Compliance, Scoring y Métricas. | **0%** |
 | **Fixtures Sintéticos (`lib/data/`)** | Cuatro JSON sintéticos deterministas, tipos internos, documentación y pruebas de invariantes. | Listas SAT 69-B, OFAC, catálogo deudores, facturas sintéticas. | **0%** |
 | **Motor de Simulación (`lib/engine/`)** | Cumplimiento, scoring y factoraje deterministas probados. | Funciones puras: validación fiscal, scoring crediticio, aforo/descuento. | **0%** |
-| **Endpoints API (`app/api/`)** | Solo `/api/health`. | `/api/emitir-factura` (+700ms), `/api/validar`, `/api/scoring`. | **80%** |
+| **Endpoints API (`app/api/`)** | Healthcheck, emisión, auditoría y simulación implementados con CORS y errores tipados. | `/api/emitir-factura` (+700ms), `/api/compliance/audit`, `/api/scoring/simulate`. | **0%** |
 | **Dashboard UI (`app/dashboard/`)** | 4 pantallas con placeholders. | Centro de Operaciones, Cumplimiento, Matriz de Decisión y TAM/SAM con componentes Claymorphic e interactividad. | **85%** |
 
 ---
@@ -85,19 +88,20 @@ faspy/
   - [x] `factoring.ts`: Cálculo financiero del factoraje:
     $$\text{Desembolso} = \text{Monto Factura} \times \text{Aforo} \times (1 - \text{Tasa Descuento}) - \text{Comisión}$$
 - Reglas 1.3: [documentación del motor](../lib/engine/README.md). OFAC exacto rechaza; desconocidos pasan a revisión; sin oferta para casos no aprobados. Historial precargado intacto.
-- Coordinación 1.4: mapear resultados internos nulos al contrato ERP y definir liquidación/unidad de margen antes de implementar ese flujo.
+- Coordinación 1.4: resultados internos nulos adaptados en la API (`0` en días/oferta), `efos_status` desconocido compatible como `LIMPIO` con decisión `revision`; liquidación/unidad de margen siguen fuera de este alcance.
 
-- [ ] **Tarea 1.4: Endpoints de la API (`app/api/*`)**
-  - [ ] `POST /api/emitir-factura`:
+- [x] **Tarea 1.4: Endpoints de la API (`app/api/*`)**
+  - [x] `POST /api/emitir-factura`:
     - Simular latencia obligatoria: `await new Promise(r => setTimeout(r, 700))`.
     - Ejecutar motor de cumplimiento y scoring.
-    - Responder con código 200/201 tipado según `schema.ts`.
-  - [ ] `GET /api/compliance/audit`: Listado de auditoría de facturas validadas.
-  - [ ] `POST /api/scoring/simulate`: Endpoint para recálculo dinámico desde el slider del dashboard.
-- [ ] **Tarea 1.5: Pruebas y Colección Bruno**
-  - [x] Añadir peticiones en `docs/faspy/collections/api/` (`emitir-factura.yml`, `scoring-simulate.yml`, etc.) con ejemplos de request y respuesta esperada.
-  - [x] Agregar tests unitarios en `tests/engine.test.mts` para las reglas puras.
-  - [ ] Extender `scripts/smoke.mjs` con los nuevos endpoints POST.
+    - Responder HTTP 200 con `EmitirFacturaResponse`, ID determinista y CLABE textual.
+  - [x] `GET /api/compliance/audit`: Listado inmutable de 18 registros históricos con campos adicionales.
+  - [x] `POST /api/scoring/simulate`: Recálculo dinámico para 30/60/90 días, con bloqueos SAT/OFAC y oferta solo aprobada.
+- [x] **Tarea 1.5: Pruebas y Colección Bruno**
+  - [x] Añadir peticiones ejecutables en `docs/faspy/collections/api/` con headers, assertions y respuestas de aprobación, rechazo, errores y preflight.
+  - [x] Agregar tests unitarios en `tests/engine.test.mts` y pruebas de handlers en `tests/api.test.mts`.
+  - [x] Extender `scripts/smoke.mjs` con emisión, auditoría, scoring, CORS, preflight, errores y casos sin oferta.
+  - [x] Ejecutar `pnpm check`, `pnpm test:smoke` y curls contra el servidor activo.
 
 ---
 
@@ -149,13 +153,13 @@ flowchart TD
 - P1: ✅ Dejó los archivos JSON sintéticos en [`lib/data/`](../lib/data) para que ambos (backend y frontend) tengan datos deterministas de trabajo.
 
 ### Paso 2: Desarrollo Paralelo
-- **P1**: ✅ Motor 1.3 implementado con pruebas unitarias; siguiente paso: integrar endpoints 1.4.
+- **P1**: ✅ Motor 1.3 y endpoints 1.4 implementados con pruebas unitarias, smoke HTTP y colección Bruno ejecutable.
 - **P3**: Construye las primitivas visuales y las 3 pantallas en `app/dashboard/` consumiendo directamente los JSON de `lib/data/` (así el dashboard luce espectacular sin depender de que la API esté lista).
 
 ### Paso 3: Endpoints API y Conexión
-- **P1**: Monta las rutas `app/api/emitir-factura/route.ts` consumiendo el motor y agregando la latencia de 700 ms simulada y CORS verificado.
-- **P1**: Añade las solicitudes en Bruno (`docs/faspy/collections/api/`).
+- **P1**: ✅ Rutas de emisión, auditoría y scoring consumen el motor; emisión agrega la latencia de 700 ms simulada y las tres rutas exponen CORS/preflight.
+- **P1**: ✅ Requests principales y escenarios de Bruno actualizados en `docs/faspy/collections/api/`.
 
 ### Paso 4: Demo Final y Validación
-- Ejecutar `pnpm check` y `pnpm test:smoke`.
+- ✅ Ejecutar `pnpm check` y `pnpm test:smoke`; verificar además emisión, auditoría, scoring, CORS, preflight y errores mediante curls contra el servidor activo.
 - Conectar una prueba de emisión desde el ERP al simulador y observar cómo se refleja el estado de cumplimiento y la oferta de factoraje en el dashboard.

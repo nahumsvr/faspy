@@ -29,7 +29,9 @@ entorno de preparación. Puede reevaluarse por separado sin cambiar la arquitect
 ## Trabajo en paralelo
 
 Consultar el [plan y reparto](docs/architecture/initial-setup.md) antes de comenzar.
-El dashboard tiene estructura navegable; los módulos y reglas de negocio están pendientes.
-El contrato de facturas debe acordarse con el ERP antes de integrar ambos repositorios.
+El dashboard tiene estructura navegable; sus módulos visuales siguen pendientes.
+El contrato de facturas está sincronizado con el ERP y las rutas de emisión, auditoría y
+scoring ya están disponibles para la integración; anticipo y liquidación quedan para sus
+tareas correspondientes.
 
 [Documentación y colección Bruno](docs/README.md) · [Checklist MVP](docs/mvp-checklist.md) · [Sistema visual](DESIGN.md)
