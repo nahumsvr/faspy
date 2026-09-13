@@ -1,40 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EcoStream · Faspy
 
-## Getting Started
+Backend y dashboard del simulador Capital One EcoStream. Todas las validaciones son
+simuladas; sin autenticación, base de datos ni conexiones reales a SAT, SPEI u OFAC.
 
-First, run the development server:
+## Desarrollo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+Usar Node 24 y pnpm 11.2.2 (ver `.nvmrc` y `packageManager`).
+
+```sh
+pnpm install --frozen-lockfile
+cp .env.example .env.local
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Dashboard: http://localhost:3000/dashboard. ERP: http://localhost:3001 por defecto.
+Configurar `ERP_ORIGIN` en `.env.local` si cambia el origen del ERP y reiniciar el servidor.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Verificación
 
-## Documentación
+`pnpm check` ejecuta lint, generación de tipos, TypeScript, pruebas y build.
+`pnpm test` prueba los helpers compartidos. Con el servidor encendido:
+`pnpm test:smoke` verifica rutas y CORS por HTTP.
+El build descarga Plus Jakarta Sans y JetBrains Mono mediante next/font; necesita red
+la primera vez. En producción las fuentes se sirven desde la propia aplicación.
+Desarrollo y build usan Webpack: Turbopack falló al abrir un puerto interno en el
+entorno de preparación. Puede reevaluarse por separado sin cambiar la arquitectura.
 
-La documentación del repositorio mantenida por Bruno se encuentra en [`docs/`](./docs/).
+## Trabajo en paralelo
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Consultar el [plan y reparto](docs/architecture/initial-setup.md) antes de comenzar.
+El dashboard tiene estructura navegable; los módulos y reglas de negocio están pendientes.
+El contrato de facturas debe acordarse con el ERP antes de integrar ambos repositorios.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[Documentación y colección Bruno](docs/README.md) · [Sistema visual](DESIGN.md)

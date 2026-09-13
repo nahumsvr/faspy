@@ -1,0 +1,21 @@
+info:
+  name: Health CORS preflight
+  type: http
+  seq: 2
+http:
+  method: OPTIONS
+  url: http://localhost:3000/api/health
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Access-Control-Request-Method
+      value: GET
+    - name: Access-Control-Request-Headers
+      value: Content-Type
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "204"
+docs: |
+  Ajustar Origin para que coincida con ERP_ORIGIN del servidor.

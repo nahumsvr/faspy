@@ -22,10 +22,11 @@ NO se conecta a SAT/SPEI reales. Todo es simulado con reglas + JSON precargado.
 
 ## Comandos
 
-- Instalar: `npm install`
-- Desarrollo: `npm run dev` (puerto 3000)
-- Build (correr SIEMPRE antes de mergear a main): `npm run build`
-- Lint: `npm run lint`
+- Instalar: `pnpm install --frozen-lockfile` (Node 24, pnpm 11.2.2)
+- Desarrollo: `pnpm dev` (puerto 3000)
+- Build (correr SIEMPRE antes de mergear a main): `pnpm build`
+- Verificación completa: `pnpm check` (lint, tipos, pruebas y build)
+- Pruebas HTTP con servidor activo: `pnpm test:smoke`
 
 ## Reglas para el agente
 
@@ -40,5 +41,5 @@ NO se conecta a SAT/SPEI reales. Todo es simulado con reglas + JSON precargado.
 
 ## Cómo probar
 
-- Usar la colección de Postman/Thunder Client en `/docs/api-collection.json` (ver sección 5).
+- Usar el workspace Bruno `docs/faspy/workspace.yml` y sus requests en `docs/faspy/collections/api/`.
 - Antes de dar por "listo" un endpoint, probarlo con `curl` o Postman, no solo desde el navegador.

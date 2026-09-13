@@ -1,14 +1,26 @@
-# Documentación del repositorio
+# Documentación de EcoStream
 
-Este directorio es el espacio central para la documentación del repositorio, mantenida por Bruno.
+- [Plan de estructura y trabajo en paralelo](architecture/initial-setup.md).
+- [Sistema visual](../DESIGN.md).
+- [Arranque y comandos](../README.md).
+- Colección Bruno/OpenCollection: abrir `docs/faspy/workspace.yml` en Bruno.
 
-## Cómo organizarla
+Bruno es el cliente de API usado para versionar requests, no una persona responsable
+de la documentación. Agregar cada request junto con su endpoint.
+Formato de referencia: [OpenCollection YAML de Bruno](https://docs.usebruno.com/opencollection-yaml/structure-reference).
 
-Puedes agregar documentos y subcarpetas según el tema. Una estructura sugerida es:
+## Comprobación inicial
 
-- `architecture/`: arquitectura y decisiones técnicas.
-- `setup/`: instalación, configuración y variables de entorno.
-- `guides/`: guías de uso y desarrollo.
-- `operations/`: despliegue, mantenimiento y resolución de problemas.
+Con `pnpm dev` activo, ejecutar `pnpm test:smoke` o:
 
-Procura que cada documento explique su propósito, fecha de actualización y cualquier requisito necesario para seguirlo.
+```sh
+curl -i http://localhost:3000/api/health
+curl -i -X OPTIONS http://localhost:3000/api/health -H 'Origin: http://localhost:3001' -H 'Access-Control-Request-Method: GET'
+```
+
+La respuesta GET es `{"status":"ok","service":"ecostream","mode":"simulation"}`.
+OPTIONS retorna 204 con el origen autorizado. Otros orígenes no reciben
+Access-Control-Allow-Origin. No se necesitan credenciales.
+
+La colección de Postman mencionada anteriormente en AGENTS.md se sustituye por el
+workspace Bruno existente; los checks automatizados de HTTP viven en scripts/smoke.mjs.
