@@ -5,14 +5,33 @@ info:
 http:
   method: GET
   url: http://localhost:3000/api/health
+  headers:
+    - name: Origin
+      value: http://localhost:3001
 runtime:
   assertions:
     - expression: res.status
       operator: eq
       value: "200"
+    - expression: res.body.status
+      operator: eq
+      value: ok
+    - expression: res.body.service
+      operator: eq
+      value: ecostream
     - expression: res.body.mode
       operator: eq
       value: simulation
 docs: |
-  Comprueba que el backend simulado está disponible. Sin credenciales.
+  Comprueba que el backend simulado está disponible. No requiere credenciales.
   Cambiar el puerto de la URL al usar un worktree en otro puerto.
+
+  ### Respuesta esperada · 200 OK
+
+  ```json
+  {
+    "status": "ok",
+    "service": "ecostream",
+    "mode": "simulation"
+  }
+  ```

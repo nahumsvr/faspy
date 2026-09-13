@@ -1,0 +1,56 @@
+info:
+  name: Simular scoring (contrato)
+  type: http
+  seq: 7
+http:
+  method: POST
+  url: http://localhost:3000/api/scoring/simulate
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"rfc_cliente":"DIN890214ABC","monto_mxn":150000,"plazo_dias":60}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.score
+      operator: eq
+      value: ALTO
+    - expression: res.body.decision
+      operator: eq
+      value: aprobada
+    - expression: res.body.dias_promedio_pago
+      operator: eq
+      value: "32"
+docs: |
+  Contrato esperado para recalcular el score desde el simulador del dashboard.
+  Esta request quedará ejecutable cuando se implemente POST /api/scoring/simulate;
+  actualmente es una referencia de integración y responderá 404.
+
+  ### Petición
+
+  ```json
+  {
+    "rfc_cliente": "DIN890214ABC",
+    "monto_mxn": 150000,
+    "plazo_dias": 60
+  }
+  ```
+
+  ### Respuesta esperada · 200 OK
+
+  ```json
+  {
+    "score": "ALTO",
+    "decision": "aprobada",
+    "dias_promedio_pago": 32
+  }
+  ```
+
+  La forma definitiva de este endpoint debe alinearse con el motor de scoring antes
+  de implementarse; este ejemplo fija el contrato mínimo que consume el dashboard.

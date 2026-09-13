@@ -1,0 +1,70 @@
+info:
+  name: Emitir factura (contrato)
+  type: http
+  seq: 3
+http:
+  method: POST
+  url: http://localhost:3000/api/emitir-factura
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"monto_mxn":150000,"cliente":"Distribuidora Industrial S.A. de C.V.","rfc_cliente":"DIN890214ABC","plazo_dias":60,"uuid_cfdi":"4a71d8be-b51f-46df-9a84-18ef5560965e"}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.factura_id
+      operator: eq
+      value: FAC-2026-001
+    - expression: res.body.cfdi_status
+      operator: eq
+      value: VIGENTE
+    - expression: res.body.efos_status
+      operator: eq
+      value: LIMPIO
+    - expression: res.body.decision
+      operator: eq
+      value: aprobada
+docs: |
+  Contrato esperado para emitir y validar una factura. Esta request quedará
+  ejecutable cuando se implemente POST /api/emitir-factura; actualmente es una
+  referencia de integración y responderá 404.
+
+  El body es plano: no debe envolverse en `invoice` ni `data`. `monto_mxn` es un
+  número positivo, `plazo_dias` usa 30, 60 o 90, y `uuid_cfdi` es un UUID del CFDI.
+
+  ### Petición
+
+  ```json
+  {
+    "monto_mxn": 150000,
+    "cliente": "Distribuidora Industrial S.A. de C.V.",
+    "rfc_cliente": "DIN890214ABC",
+    "plazo_dias": 60,
+    "uuid_cfdi": "4a71d8be-b51f-46df-9a84-18ef5560965e"
+  }
+  ```
+
+  ### Respuesta esperada · 200 OK
+
+  ```json
+  {
+    "factura_id": "FAC-2026-001",
+    "cfdi_status": "VIGENTE",
+    "efos_status": "LIMPIO",
+    "score": "ALTO",
+    "monto_anticipo": 120000,
+    "tasa_aplicada": 0.02,
+    "dias_promedio_pago": 45,
+    "clabe_virtual": "012180001234567890",
+    "decision": "aprobada"
+  }
+  ```
+
+  `clabe_virtual` debe regresar como string para conservar ceros iniciales y
+  `tasa_aplicada` es una fracción: `0.02` representa 2%.

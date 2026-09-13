@@ -19,3 +19,14 @@ runtime:
       value: "204"
 docs: |
   Ajustar Origin para que coincida con ERP_ORIGIN del servidor.
+
+  ### Respuesta esperada · 204 No Content
+
+  No tiene cuerpo. Para el origen permitido, el servidor debe responder además con:
+
+  ```http
+  Access-Control-Allow-Origin: http://localhost:3001
+  Access-Control-Allow-Methods: GET, POST, OPTIONS
+  Access-Control-Allow-Headers: Content-Type
+  Vary: Origin
+  ```

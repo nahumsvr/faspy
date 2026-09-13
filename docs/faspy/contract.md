@@ -3,6 +3,22 @@
 Fuente de verdad en este repositorio: [`types/schema.ts`](../../types/schema.ts).  
 Espejo exacto del contrato del ERP: [`../erp-faspy/types/schema.ts`](file:///Users/nahumsvr/Documents/code-projects/erp-faspy/types/schema.ts).
 
+## Requests en Bruno
+
+La colección versionada está en [`workspace.yml`](./workspace.yml). Cada request
+incluye la petición completa, headers, status esperado, assertions y un ejemplo de
+respuesta en su bloque `docs`:
+
+| Ruta | Request Bruno | Estado |
+| --- | --- | --- |
+| `GET /api/health` | [`health.yml`](./collections/api/health.yml) | Implementada y ejecutable |
+| `OPTIONS /api/health` | [`health-options.yml`](./collections/api/health-options.yml) | Implementada y ejecutable |
+| `POST /api/emitir-factura` | [`emitir-factura.yml`](./collections/api/emitir-factura.yml) | Contrato documentado; endpoint pendiente |
+| `POST /api/aceptar-anticipo` | [`aceptar-anticipo.yml`](./collections/api/aceptar-anticipo.yml) | Contrato documentado; endpoint pendiente |
+| `POST /api/simular-pago` | [`simular-pago.yml`](./collections/api/simular-pago.yml) | Contrato documentado; endpoint pendiente |
+| `GET /api/compliance/audit` | [`compliance-audit.yml`](./collections/api/compliance-audit.yml) | Contrato documentado; endpoint pendiente |
+| `POST /api/scoring/simulate` | [`scoring-simulate.yml`](./collections/api/scoring-simulate.yml) | Contrato documentado; endpoint pendiente |
+
 ---
 
 ## 1. Emisión de Factura y Validación (`POST /api/emitir-factura`)

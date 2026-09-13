@@ -5,6 +5,8 @@
 - [Sistema visual](../DESIGN.md).
 - [Arranque y comandos](../README.md).
 - Colección Bruno/OpenCollection: abrir `docs/faspy/workspace.yml` en Bruno.
+  La carpeta `docs/faspy/collections/api/` contiene una request por ruta, con body,
+  headers, status esperado, assertions y ejemplo de respuesta.
 
 Bruno es el cliente de API usado para versionar requests, no una persona responsable
 de la documentación. Agregar cada request junto con su endpoint.
@@ -25,3 +27,6 @@ Access-Control-Allow-Origin. No se necesitan credenciales.
 
 La colección de Postman mencionada anteriormente en AGENTS.md se sustituye por el
 workspace Bruno existente; los checks automatizados de HTTP viven en scripts/smoke.mjs.
+`health.yml` y `health-options.yml` son ejecutables con la API actual. Las requests
+marcadas como `(contrato)` documentan las rutas planeadas y su respuesta esperada;
+quedarán ejecutables al implementar esas rutas.
