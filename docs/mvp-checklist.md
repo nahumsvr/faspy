@@ -102,7 +102,7 @@ faspy/
 
 - [ ] **Tarea 3.1: Primitivas del Sistema Visual (`components/ui/*`)**  
   *(Alinear al 100% con [DESIGN.md](../DESIGN.md))*
-  - [ ] `PillButton`: Botones primarios (Sovereign Blue `#004977`) y secundarios (Mint `#10B981`) con sombras táctiles y respuesta elástica `scale(0.97)`.
+  - [x] `PillButton` / `Button`: Botones primarios (Sovereign Blue `#004977`) y secundarios (Mint `#10B981`) con sombras táctiles y respuesta elástica `scale(0.97)`.
   - [ ] `MetricCard`: Tarjetas de estadísticas con elevación Tier 1, direct specular highlight y números en `JetBrains Mono`.
   - [ ] `BadgeStatus`: Chips para semáforo de cumplimiento (Verde: Validado, Rojo: 69-B / Alerta, Amarillo: Revisión).
   - [ ] `TactileSlider`: Slider de velocidad de factoraje (aforo/días) con riel sunken y thumb pill extruded.
