@@ -38,6 +38,9 @@ NO se conecta a SAT/SPEI reales. Todo es simulado con reglas + JSON precargado.
   latencia real de validación — es intencional, no un bug.
 - CORS: `app/api/*` debe permitir el origen de `ecostream-erp` (ver `.env.example` para la URL).
 - No toques `app/erp/*` — ese código vive en otro repo (`ecostream-erp`).
+- Revisa y mantén actualizado `docs/mvp-checklist.md`: es la fuente de verdad del avance del MVP,
+  las tareas completadas, las pendientes y la coordinación del equipo. Cada vez que implementes una
+  feature, endpoint, componente o cambie el alcance, actualiza el checklist correspondiente.
 
 ## Cómo probar
 
