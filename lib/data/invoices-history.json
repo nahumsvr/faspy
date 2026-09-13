@@ -1,0 +1,15 @@
+[
+  {
+    "factura_id": "FAC-2026-001",
+    "monto_mxn": 150000,
+    "cliente": "Distribuidora Industrial S.A. de C.V.",
+    "rfc_cliente": "DIN890214ABC",
+    "plazo_dias": 60,
+    "uuid_cfdi": "4a71d8be-b51f-46df-9a84-18ef5560965e",
+    "cfdi_status": "VIGENTE",
+    "efos_status": "LIMPIO",
+    "score": "ALTO",
+    "decision": "aprobada",
+    "timestamp": "2026-09-13T10:00:00.000Z"
+  }
+]

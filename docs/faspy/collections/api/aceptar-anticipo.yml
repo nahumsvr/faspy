@@ -1,0 +1,23 @@
+info:
+  name: Aceptar anticipo · escenario acordado
+  type: http
+  seq: 4
+http:
+  method: POST
+  url: http://localhost:3000/api/aceptar-anticipo
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"facturaId":"FAC-2026-001"}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.estado
+      operator: eq
+      value: FONDEADA

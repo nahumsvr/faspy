@@ -1,5 +1,26 @@
 # EcoStream · Faspy: Diagnóstico de Estado y Checklist para el MVP
 
+## Estado vigente — escenario sintético ejecutable, 2026-09-13
+
+La base de esta entrega es la rama `feature/contrato-facturacion-compliance-scoring`,
+commit `921fd4e`. Se implementó el único escenario acordado del contrato: emisión de
+la factura de 150000, aceptación de anticipo y simulación de pago. Las entradas
+distintas responden `422 SCENARIO_NOT_SUPPORTED`; no hay fallback ni extrapolación
+de reglas. No se consultan SAT, EFOS, OFAC o SPEI reales.
+
+- [x] Fixture del escenario documentado y catálogos mínimos deterministas en `lib/data/`.
+- [x] Motor puro acotado al escenario en `lib/engine/` para compliance, scoring y factoraje.
+- [x] `POST /api/emitir-factura` con latencia de 700 ms, validación de body y respuesta plana.
+- [x] `POST /api/aceptar-anticipo` y `POST /api/simular-pago` con resultados del caso acordado.
+- [x] Pruebas unitarias y HTTP: 11 pruebas correctas; smoke test y colección Bruno ampliados.
+- [ ] Auditoría (`ComplianceAuditItem` / `GET /api/compliance/audit`): pendiente por decisión del ERP.
+- [ ] `POST /api/scoring/simulate`: pendiente de contrato de entrada/salida y reglas de recálculo.
+- [ ] Fixtures completos de 5–10 deudores y 15–20 facturas: fuera del alcance del escenario único.
+- [ ] Reglas generales para entradas distintas, errores financieros, reintentos, persistencia y secuencia.
+- [ ] Primera emisión desde el ERP, comprobación de CLABE en intercambio real y CORS desde navegador.
+
+El diagnóstico anterior de este archivo describe el estado previo a esta entrega y se conserva como historial.
+
 > **Entorno:** Hackathon Capital One EcoStream  
 > **Alcance de este repositorio:** Backend / Motor de Simulación (`app/api`, `lib/engine`) y Dashboard (`app/dashboard`).  
 > **Filosofía central:** Simulación determinista sin backend real, sin base de datos real y sin conexión a SAT/SPEI/OFAC.
@@ -74,24 +95,24 @@ faspy/
   - [x] Sincronizar contrato con `erp-faspy/types/schema.ts` (espejo exacto, plano, serialización de CLABE y validado con tests).
   - [x] Añadir casos de compilación y pruebas en `tests/schema.test.mts`.
   - [x] Actualizar documentación de contrato y colección Bruno (`docs/faspy/contract.md`).
-- [ ] **Tarea 1.2: Fixtures Sintéticos Deterministas (`lib/data/*.json`)**
+- [ ] **Tarea 1.2: Fixtures Sintéticos Deterministas (`lib/data/*.json`)** *(parcial: solo escenario acordado)*
   - [ ] `sat-69b.json`: Lista de RFCs simulados clasificados (empresas fantasma EFOS/EDOS vs limpias).
   - [ ] `ofac-sanctions.json`: Lista de personas/entidades simuladas para sanción internacional.
   - [ ] `debtors.json`: Catálogo de 5-10 pagadores clave con historial crediticio, días promedio de pago y calificación.
   - [ ] `invoices-history.json`: Lote de 15-20 facturas con estados diversos para precargar el dashboard.
-- [ ] **Tarea 1.3: Motor Puro de Simulación (`lib/engine/*.ts`)**
+- [ ] **Tarea 1.3: Motor Puro de Simulación (`lib/engine/*.ts`)** *(parcial: solo escenario acordado)*
   - [ ] `compliance.ts`: Validación de RFC contra 69-B y OFAC; validación sintáctica de CFDI y CLABE SPEI.
   - [ ] `scoring.ts`: Algoritmo determinista de scoring en base al pagador, monto y plazo (30/60/90 días).
   - [ ] `factoring.ts`: Cálculo financiero del factoraje:
     $$\text{Desembolso} = \text{Monto Factura} \times \text{Aforo} \times (1 - \text{Tasa Descuento}) - \text{Comisión}$$
-- [ ] **Tarea 1.4: Endpoints de la API (`app/api/*`)**
+- [ ] **Tarea 1.4: Endpoints de la API (`app/api/*`)** *(parcial: tres rutas del contrato implementadas)*
   - [ ] `POST /api/emitir-factura`:
     - Simular latencia obligatoria: `await new Promise(r => setTimeout(r, 700))`.
     - Ejecutar motor de cumplimiento y scoring.
     - Responder con código 200/201 tipado según `schema.ts`.
   - [ ] `GET /api/compliance/audit`: Listado de auditoría de facturas validadas.
   - [ ] `POST /api/scoring/simulate`: Endpoint para recálculo dinámico desde el slider del dashboard.
-- [ ] **Tarea 1.5: Pruebas y Colección Bruno**
+- [ ] **Tarea 1.5: Pruebas y Colección Bruno** *(parcial: emisión, anticipo y pago cubiertos)*
   - [ ] Añadir peticiones en `docs/faspy/collections/api/` (`emitir-factura.yml`, `scoring.yml`, etc.).
   - [ ] Agregar tests unitarios en `tests/engine.test.mts` para las reglas puras.
   - [ ] Extender `scripts/smoke.mjs` con los nuevos endpoints POST.

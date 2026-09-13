@@ -1,0 +1,23 @@
+info:
+  name: Simular pago · escenario acordado
+  type: http
+  seq: 5
+http:
+  method: POST
+  url: http://localhost:3000/api/simular-pago
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"facturaId":"FAC-2026-001"}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.remanente_dispersado
+      operator: eq
+      value: "27000"

@@ -1,7 +1,9 @@
 # Contrato de integración HTTP: ERP ⟷ Faspy Core
 
 Fuente de verdad en este repositorio: [`types/schema.ts`](../../types/schema.ts).  
-Espejo exacto del contrato del ERP: [`../erp-faspy/types/schema.ts`](file:///Users/nahumsvr/Documents/code-projects/erp-faspy/types/schema.ts).
+Espejo del contrato del ERP revisado en `921fd4e`: [`../erp-faspy/types/schema.ts`](file:///Users/nahumsvr/Documents/code-projects/erp-faspy/types/schema.ts).
+Las rutas financieras implementadas solo habilitan el escenario sintético documentado
+en este archivo; una entrada distinta responde `422 SCENARIO_NOT_SUPPORTED`.
 
 ---
 
@@ -40,6 +42,9 @@ Respuesta plana que incluye el informe de cumplimiento fiscal y la oferta de fac
 - `clabe_virtual`: Cadena literal (`string`) de 18 dígitos, nunca formateada como número para preservar ceros a la izquierda.
 - `tasa_aplicada`: Fracción numérica (ej. `0.02` representa 2%).
 - `decision`: Unión `"aprobada" | "revision" | "rechazada"`.
+
+El único escenario ejecutable usa exactamente los valores del ejemplo anterior. No
+se calculan importes para otras facturas ni se consulta SAT, EFOS, OFAC o SPEI real.
 
 ---
 
@@ -83,3 +88,11 @@ Respuesta plana que incluye el informe de cumplimiento fiscal y la oferta de fac
   "margen_neto_pct": 0.02
 }
 ```
+
+## Política de errores de la simulación
+
+Los handlers responden `400` con `{ "error": { "code", "message" } }` cuando
+el JSON o los campos requeridos son inválidos. Responden `422` con
+`SCENARIO_NOT_SUPPORTED` cuando la solicitud es válida pero no coincide con el
+escenario acordado. Esta política es propia de la simulación y no añade reglas
+financieras al contrato de datos.

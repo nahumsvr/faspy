@@ -1,0 +1,25 @@
+info:
+  name: Emitir factura · escenario acordado
+  type: http
+  seq: 3
+http:
+  method: POST
+  url: http://localhost:3000/api/emitir-factura
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"monto_mxn":150000,"cliente":"Distribuidora Industrial S.A. de C.V.","rfc_cliente":"DIN890214ABC","plazo_dias":60,"uuid_cfdi":"4a71d8be-b51f-46df-9a84-18ef5560965e"}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.decision
+      operator: eq
+      value: aprobada
+docs: |
+  Solo está habilitado el escenario sintético documentado en contract.md.
