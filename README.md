@@ -32,4 +32,4 @@ Consultar el [plan y reparto](docs/architecture/initial-setup.md) antes de comen
 El dashboard tiene estructura navegable; los módulos y reglas de negocio están pendientes.
 El contrato de facturas debe acordarse con el ERP antes de integrar ambos repositorios.
 
-[Documentación y colección Bruno](docs/README.md) · [Sistema visual](DESIGN.md)
+[Documentación y colección Bruno](docs/README.md) · [Checklist MVP](docs/mvp-checklist.md) · [Sistema visual](DESIGN.md)

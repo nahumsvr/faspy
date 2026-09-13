@@ -1,6 +1,7 @@
 # Documentación de EcoStream
 
 - [Plan de estructura y trabajo en paralelo](architecture/initial-setup.md).
+- [Checklist y Diagnóstico del MVP](mvp-checklist.md).
 - [Sistema visual](../DESIGN.md).
 - [Arranque y comandos](../README.md).
 - Colección Bruno/OpenCollection: abrir `docs/faspy/workspace.yml` en Bruno.
