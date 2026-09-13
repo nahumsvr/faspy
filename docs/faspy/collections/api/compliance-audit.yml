@@ -13,16 +13,24 @@ runtime:
     - expression: res.status
       operator: eq
       value: "200"
+    - expression: res.body.length
+      operator: eq
+      value: "18"
     - expression: res.body[0].id
       operator: eq
       value: FAC-2026-001
     - expression: res.body[0].decision
       operator: eq
       value: aprobada
+    - expression: res.body[0].plazo_dias
+      operator: eq
+      value: "60"
+    - expression: res.body[0].ofac_status
+      operator: eq
+      value: LIMPIO
 docs: |
-  Contrato esperado para listar el historial precargado del Centro de Cumplimiento.
-  Esta request quedará ejecutable cuando se implemente GET /api/compliance/audit;
-  actualmente es una referencia de integración y responderá 404.
+  Lista el historial precargado del Centro de Cumplimiento. La respuesta completa
+  contiene 18 registros y no se modifica con nuevas emisiones.
 
   No requiere body ni parámetros. La respuesta es un arreglo de registros
   compatibles con `ComplianceAuditItem` y con los campos adicionales `plazo_dias`,

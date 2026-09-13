@@ -1,0 +1,65 @@
+info:
+  name: Emitir factura (pagador desconocido)
+  type: http
+  seq: 8
+http:
+  method: POST
+  url: http://localhost:3000/api/emitir-factura
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"monto_mxn":100000,"cliente":"Pagador no catalogado S.A. de C.V.","rfc_cliente":"XXX000101ABC","plazo_dias":60,"uuid_cfdi":"f47ac10b-58cc-4372-a567-0e02b2c3d479"}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.factura_id
+      operator: eq
+      value: FAC-f47ac10b-58cc-4372-a567-0e02b2c3d479
+    - expression: res.body.cfdi_status
+      operator: eq
+      value: VIGENTE
+    - expression: res.body.efos_status
+      operator: eq
+      value: LIMPIO
+    - expression: res.body.decision
+      operator: eq
+      value: revision
+    - expression: res.body.dias_promedio_pago
+      operator: eq
+      value: "0"
+    - expression: res.body.monto_anticipo
+      operator: eq
+      value: "0"
+    - expression: res.body.tasa_aplicada
+      operator: eq
+      value: "0"
+    - expression: res.body.clabe_virtual
+      operator: eq
+      value: "012180001234567890"
+docs: |
+  RFC sintácticamente válido pero ausente de SAT/deudores: la decisión es
+  `revision`, los días desconocidos se representan como `0` y no hay oferta.
+  `efos_status: LIMPIO` solo indica ausencia de coincidencia sancionada; no
+  certifica al pagador.
+
+  ### Respuesta esperada · 200 OK
+
+  ```json
+  {
+    "factura_id": "FAC-f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "cfdi_status": "VIGENTE",
+    "efos_status": "LIMPIO",
+    "score": "BAJO",
+    "monto_anticipo": 0,
+    "tasa_aplicada": 0,
+    "dias_promedio_pago": 0,
+    "clabe_virtual": "012180001234567890",
+    "decision": "revision"
+  }
+  ```

@@ -1,0 +1,25 @@
+info:
+  name: Auditoría CORS preflight
+  type: http
+  seq: 12
+http:
+  method: OPTIONS
+  url: http://localhost:3000/api/compliance/audit
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Access-Control-Request-Method
+      value: GET
+    - name: Access-Control-Request-Headers
+      value: Content-Type
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "204"
+    - expression: res.headers['access-control-allow-origin']
+      operator: eq
+      value: http://localhost:3001
+docs: |
+  Preflight de `GET /api/compliance/audit`. El origen debe coincidir con
+  `ERP_ORIGIN` del servidor.
