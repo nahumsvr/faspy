@@ -18,7 +18,7 @@ NO se conecta a SAT/SPEI reales. Todo es simulado con reglas + JSON precargado.
 - `app/dashboard/*` → Centro de Cumplimiento, Matriz de Decisión, TAM/SAM (dueño: P3)
 - `lib/engine/*` → lógica pura de validación/scoring, sin efectos secundarios de red real
 - `lib/data/*.json` → datos precargados, NO modificar estructura sin avisar al equipo
-- `types/schema.ts` → contrato de datos, espejo exacto de `ecostream-erp/types/schema.ts`
+- `types/schema.ts` → contrato de datos, espejo exacto de `erp-faspy/types/schema.ts`
 
 ## Comandos
 
@@ -36,8 +36,8 @@ NO se conecta a SAT/SPEI reales. Todo es simulado con reglas + JSON precargado.
   No cambies los nombres de campos existentes; si falta un campo, agrégalo sin romper los existentes.
 - Agrega un `await new Promise(r => setTimeout(r, 700))` en `/api/emitir-factura` para simular
   latencia real de validación — es intencional, no un bug.
-- CORS: `app/api/*` debe permitir el origen de `ecostream-erp` (ver `.env.example` para la URL).
-- No toques `app/erp/*` — ese código vive en otro repo (`ecostream-erp`).
+- CORS: `app/api/*` debe permitir el origen de `erp-faspy` (ver `.env.example` para la URL).
+- No toques `app/erp/*` — ese código vive en otro repo (`erp-faspy`).
 - Revisa y mantén actualizado `docs/mvp-checklist.md`: es la fuente de verdad del avance del MVP,
   las tareas completadas, las pendientes y la coordinación del equipo. Cada vez que implementes una
   feature, endpoint, componente o cambie el alcance, actualiza el checklist correspondiente.
