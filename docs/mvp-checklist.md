@@ -106,7 +106,7 @@ faspy/
   - [x] `MetricCard`: Tarjetas de estadísticas con elevación Tier 1, direct specular highlight y números en `JetBrains Mono`.
   - [x] `BadgeStatus`: Chips para semáforo de cumplimiento (Verde: Validado, Rojo: 69-B / Alerta, Amarillo: Revisión).
   - [x] `TactileSlider`: Slider de velocidad de factoraje (aforo/días) con riel sunken y thumb pill extruded.
-  - [ ] `SegmentedControl`: Selector flotante estilo Apple Fluid para cambiar plazos o filtros.
+  - [x] `SegmentedControl`: Selector flotante estilo Apple Fluid para cambiar plazos o filtros.
 - [ ] **Tarea 3.2: Módulo Centro de Cumplimiento (`app/dashboard/cumplimiento/`)**
   - [ ] KPI Ribbon: Tasa de aprobación fiscal, alertas 69-B detectadas, verificación OFAC y tiempo medio de resolución.
   - [ ] Data Rows táctiles: Listado de facturas procesadas con chips de estado SAT/OFAC/SPEI.
