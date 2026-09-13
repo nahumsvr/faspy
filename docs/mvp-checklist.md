@@ -126,11 +126,24 @@ faspy/
 - [x] **Tarea 3.4: Módulo TAM / SAM / SOM (`app/dashboard/mercado/`)**
   - [x] Desglose visual del mercado de factoraje en México (TAM: Valor de facturación B2B; SAM: Factoraje accesible a PyMEs; SOM: Objetivo EcoStream).
   - [x] Calculadora de impacto económico: Ganancia de días de caja (DSO reducido de 75 a 1 día) y retorno para la empresa.
-- [x] **Tarea 3.5: Centro de Operaciones / Resumen General (`app/dashboard/page.tsx`)**
+- [x] **Tarea 3.5: Centro de Operaciones / Resumen General (`app/dashboard/page.tsx`)**git add .
   - [x] Vista ejecutiva unificada: Widgets que conectan Cumplimiento, Decisión de Liquidez y Métricas clave.
   - [x] Feed en vivo simulado de transacciones recientes.
 - [x] **Tarea 3.6: Layout y Navegación Flotante (`app/dashboard/layout.tsx`)**
   - [x] Mejorar la barra de navegación `glass-bar` para mostrar rutas activas, estado del simulador ("Modo: Simulación Activa") y acceso rápido a los 3 submódulos.
+
+- [x] **Tarea 3.7: Toggle Minimalista de Tema ('Claro / Oscuro / Sistema')**
+  Añadir un componente de selección flotante en el layout para alternar dinámicamente entre modo oscuro, claro y preferencia del sistema y que de igual manera es responsive.
+- [x] **Tarea 3.8: Auditoría de Responsividad Total (Responsive Design)**
+  Optimizar grillas, contenedores y paddings con media queries y clases responsivas de Tailwind para garantizar adaptación fluida en cualquier dispositivo o tamaño de ventana.
+- [x] **Tarea 3.9: Unificación de Paleta de Colores en Botones**
+Coregir inconsistencias de diseño (como el botón "Abrir Matriz" en la sección de resumen visible en image_d5858d.png) para estandarizar los tonos corporativos y de acento en todos los CTAs.
+*   [x] **Tarea 4.0: Refactorización Estructural del Layout**
+    *   Corregir el solapamiento del Sidebar sobre el contenido principal ajustando el contenedor principal con márgenes adaptativos (`ml-64` a `ml-0` en móvil) y Flexbox/Grid.
+*   [x] **Tarea 4.1: Responsividad Total en Vistas Principales**
+    *   Ajustar contenedores en `/cumplimiento`, `/matriz` y `/mercado` usando `grid-cols-1 md:grid-cols-2 lg:grid-cols-3` para evitar el truncamiento de texto y el encimamiento de elementos.
+*   [x] **Tarea 4.2: Fondo Gradiente Animado**
+    *   Implementar un `background` dinámico con animación CSS sutil (`animate-gradient`) que alterne entre los tonos de la paleta corporativa (Sovereign Blue y toques de Mint).
 
 ---
 

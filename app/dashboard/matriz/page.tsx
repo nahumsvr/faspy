@@ -59,9 +59,9 @@ export default function MatrizDecisionPage() {
             </div>
           </div>
           
-          <div className="mt-auto pt-6 flex gap-4">
-            <Button variant="outlined" className="flex-1 text-sm">Simular otra empresa</Button>
-            <Button variant="primary" className="flex-1 text-sm">Recalcular</Button>
+          <div className="mt-auto pt-6 flex flex-col sm:flex-row gap-4">
+            <Button variant="outlined" className="flex-1 text-sm w-full sm:w-auto">Simular otra empresa</Button>
+            <Button variant="primary" className="flex-1 text-sm w-full sm:w-auto">Recalcular</Button>
           </div>
         </div>
 

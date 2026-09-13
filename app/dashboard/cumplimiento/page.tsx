@@ -20,9 +20,9 @@ export default function CumplimientoPage() {
           <h1 className="text-3xl font-bold tracking-tight text-white font-sans">Centro de Cumplimiento</h1>
           <p className="text-gray-400 mt-2 text-sm">Monitoreo en tiempo real de validaciones fiscales y prevención de lavado de dinero (PLD).</p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outlined" className="px-4 py-2 text-sm">Exportar Reporte</Button>
-          <Button variant="primary" className="px-4 py-2 text-sm">Nueva Validación</Button>
+        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          <Button variant="outlined" className="px-4 py-2 text-sm w-full sm:w-auto">Exportar Reporte</Button>
+          <Button variant="primary" className="px-4 py-2 text-sm w-full sm:w-auto">Nueva Validación</Button>
         </div>
       </div>
 
