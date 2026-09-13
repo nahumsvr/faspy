@@ -1,0 +1,50 @@
+info:
+  name: Simular scoring (bloqueo OFAC)
+  type: http
+  seq: 9
+http:
+  method: POST
+  url: http://localhost:3000/api/scoring/simulate
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"rfc_cliente":"COM760315QRS","monto_mxn":100000,"plazo_dias":30}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.score
+      operator: eq
+      value: ALTO
+    - expression: res.body.decision
+      operator: eq
+      value: rechazada
+    - expression: res.body.dias_promedio_pago
+      operator: eq
+      value: "38"
+    - expression: res.body.monto_anticipo
+      operator: eq
+      value: "0"
+    - expression: res.body.tasa_aplicada
+      operator: eq
+      value: "0"
+docs: |
+  La coincidencia OFAC bloquea la oferta aunque el score crediticio sea ALTO y
+  el estado fiscal SAT sea LIMPIO.
+
+  ### Respuesta esperada · 200 OK
+
+  ```json
+  {
+    "score": "ALTO",
+    "decision": "rechazada",
+    "dias_promedio_pago": 38,
+    "monto_anticipo": 0,
+    "tasa_aplicada": 0
+  }
+  ```

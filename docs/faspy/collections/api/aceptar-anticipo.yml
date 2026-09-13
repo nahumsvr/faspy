@@ -1,0 +1,44 @@
+info:
+  name: aceptar-anticipo (demo)
+  type: http
+  seq: 4
+http:
+  method: POST
+  url: http://localhost:3000/api/aceptar-anticipo
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"facturaId": "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e"}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.factura_id
+      operator: eq
+      value: "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e"
+    - expression: res.body.estado
+      operator: eq
+      value: "FONDEADA"
+    - expression: res.body.monto_depositado
+      operator: eq
+      value: "132300"
+    - expression: res.body.fecha_deposito
+      operator: eq
+      value: "2026-09-13T10:00:00.000Z"
+docs: |
+  Respuesta determinista del escenario documentado. No guarda estado ni ejecuta transferencias.
+  IDs distintos devuelven 422 SCENARIO_NOT_SUPPORTED; JSON o campos inválidos, 400.
+
+  ```json
+  {
+    "factura_id": "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e",
+    "estado": "FONDEADA",
+    "monto_depositado": 132300,
+    "fecha_deposito": "2026-09-13T10:00:00.000Z"
+  }
+  ```

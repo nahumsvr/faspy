@@ -1,0 +1,48 @@
+info:
+  name: simular-pago (demo)
+  type: http
+  seq: 5
+http:
+  method: POST
+  url: http://localhost:3000/api/simular-pago
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"facturaId": "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e"}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.factura_id
+      operator: eq
+      value: "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e"
+    - expression: res.body.principal_retenido
+      operator: eq
+      value: "132300"
+    - expression: res.body.comision_cobrada
+      operator: eq
+      value: "3000"
+    - expression: res.body.remanente_dispersado
+      operator: eq
+      value: "14700"
+    - expression: res.body.margen_neto_pct
+      operator: eq
+      value: "0.02"
+docs: |
+  Respuesta determinista del escenario documentado. No guarda estado ni ejecuta transferencias.
+  IDs distintos devuelven 422 SCENARIO_NOT_SUPPORTED; JSON o campos inválidos, 400.
+
+  ```json
+  {
+    "factura_id": "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e",
+    "principal_retenido": 132300,
+    "comision_cobrada": 3000,
+    "remanente_dispersado": 14700,
+    "margen_neto_pct": 0.02
+  }
+  ```

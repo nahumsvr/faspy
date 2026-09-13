@@ -1,0 +1,74 @@
+[
+  {
+    "rfc": "DIN890214ABC",
+    "razon_social": "Distribuidora Industrial S.A. de C.V.",
+    "calificacion": "A",
+    "dias_promedio_pago": 32,
+    "facturas_pagadas": 26,
+    "facturas_vencidas": 1,
+    "limite_exposicion_mxn": 2500000
+  },
+  {
+    "rfc": "COM760315QRS",
+    "razon_social": "Comercializadora del Centro S.A. de C.V.",
+    "calificacion": "A",
+    "dias_promedio_pago": 38,
+    "facturas_pagadas": 24,
+    "facturas_vencidas": 2,
+    "limite_exposicion_mxn": 1800000
+  },
+  {
+    "rfc": "LOG850722MNO",
+    "razon_social": "Logística del Bajío S.A. de C.V.",
+    "calificacion": "B",
+    "dias_promedio_pago": 52,
+    "facturas_pagadas": 18,
+    "facturas_vencidas": 3,
+    "limite_exposicion_mxn": 1200000
+  },
+  {
+    "rfc": "TEC910108JKL",
+    "razon_social": "Tecnología y Componentes del Pacífico S.A. de C.V.",
+    "calificacion": "B",
+    "dias_promedio_pago": 60,
+    "facturas_pagadas": 16,
+    "facturas_vencidas": 4,
+    "limite_exposicion_mxn": 900000
+  },
+  {
+    "rfc": "SER930927DEF",
+    "razon_social": "Servicios Empresariales del Golfo S.A. de C.V.",
+    "calificacion": "C",
+    "dias_promedio_pago": 74,
+    "facturas_pagadas": 12,
+    "facturas_vencidas": 5,
+    "limite_exposicion_mxn": 650000
+  },
+  {
+    "rfc": "ALM800411GHI",
+    "razon_social": "Alimentos del Valle S.A. de C.V.",
+    "calificacion": "C",
+    "dias_promedio_pago": 82,
+    "facturas_pagadas": 11,
+    "facturas_vencidas": 6,
+    "limite_exposicion_mxn": 500000
+  },
+  {
+    "rfc": "CON950603VWX",
+    "razon_social": "Construcciones del Sureste S.A. de C.V.",
+    "calificacion": "D",
+    "dias_promedio_pago": 110,
+    "facturas_pagadas": 6,
+    "facturas_vencidas": 9,
+    "limite_exposicion_mxn": 250000
+  },
+  {
+    "rfc": "MAN870119TUV",
+    "razon_social": "Manufacturas del Altiplano S.A. de C.V.",
+    "calificacion": "D",
+    "dias_promedio_pago": 125,
+    "facturas_pagadas": 5,
+    "facturas_vencidas": 10,
+    "limite_exposicion_mxn": 180000
+  }
+]

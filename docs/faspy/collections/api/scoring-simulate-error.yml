@@ -1,0 +1,37 @@
+info:
+  name: Simular scoring (monto inválido)
+  type: http
+  seq: 10
+http:
+  method: POST
+  url: http://localhost:3000/api/scoring/simulate
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"rfc_cliente":"DIN890214ABC","monto_mxn":"150000","plazo_dias":60}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"
+    - expression: res.body.error.code
+      operator: eq
+      value: MONTO_INVALIDO
+docs: |
+  Los tipos incorrectos se distinguen de las decisiones de negocio y devuelven
+  `ApiError` con status 400.
+
+  ### Respuesta esperada · 400 Bad Request
+
+  ```json
+  {
+    "error": {
+      "code": "MONTO_INVALIDO",
+      "message": "El monto debe ser positivo, finito y representable en centavos seguros."
+    }
+  }
+  ```

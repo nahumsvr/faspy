@@ -1,0 +1,63 @@
+info:
+  name: Simular scoring (contrato)
+  type: http
+  seq: 7
+http:
+  method: POST
+  url: http://localhost:3000/api/scoring/simulate
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"rfc_cliente":"DIN890214ABC","monto_mxn":150000,"plazo_dias":60}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.score
+      operator: eq
+      value: ALTO
+    - expression: res.body.decision
+      operator: eq
+      value: aprobada
+    - expression: res.body.dias_promedio_pago
+      operator: eq
+      value: "32"
+    - expression: res.body.monto_anticipo
+      operator: eq
+      value: "132300"
+    - expression: res.body.tasa_aplicada
+      operator: eq
+      value: "0.02"
+docs: |
+  Recalcula el score desde el simulador del dashboard. No valida un CFDI, no
+  agrega latencia y no registra facturas; sí aplica bloqueos EFOS, EDOS y OFAC.
+
+  ### Petición
+
+  ```json
+  {
+    "rfc_cliente": "DIN890214ABC",
+    "monto_mxn": 150000,
+    "plazo_dias": 60
+  }
+  ```
+
+  ### Respuesta esperada · 200 OK
+
+  ```json
+  {
+  "score": "ALTO",
+  "decision": "aprobada",
+  "dias_promedio_pago": 32,
+  "monto_anticipo": 132300,
+  "tasa_aplicada": 0.02
+  }
+  ```
+
+  Los casos en revisión o rechazo devuelven `monto_anticipo: 0` y
+  `tasa_aplicada: 0`.

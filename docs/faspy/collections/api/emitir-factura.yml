@@ -1,0 +1,82 @@
+info:
+  name: Emitir factura (contrato)
+  type: http
+  seq: 3
+http:
+  method: POST
+  url: http://localhost:3000/api/emitir-factura
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"monto_mxn":150000,"cliente":"Distribuidora Industrial S.A. de C.V.","rfc_cliente":"DIN890214ABC","plazo_dias":60,"uuid_cfdi":"4a71d8be-b51f-46df-9a84-18ef5560965e"}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.factura_id
+      operator: eq
+      value: FAC-4a71d8be-b51f-46df-9a84-18ef5560965e
+    - expression: res.body.cfdi_status
+      operator: eq
+      value: VIGENTE
+    - expression: res.body.efos_status
+      operator: eq
+      value: LIMPIO
+    - expression: res.body.decision
+      operator: eq
+      value: aprobada
+    - expression: res.body.monto_anticipo
+      operator: eq
+      value: "132300"
+    - expression: res.body.tasa_aplicada
+      operator: eq
+      value: "0.02"
+    - expression: res.body.dias_promedio_pago
+      operator: eq
+      value: "32"
+    - expression: res.body.clabe_virtual
+      operator: eq
+      value: "012180001234567890"
+docs: |
+  Emite y valida una factura contra los catálogos sintéticos. La respuesta se
+  calcula de forma determinista y la ruta simula 700 ms de validación.
+
+  El body es plano: no debe envolverse en `invoice` ni `data`. `monto_mxn` es un
+  número positivo, `plazo_dias` usa 30, 60 o 90, y `uuid_cfdi` es un UUID del CFDI.
+
+  ### Petición
+
+  ```json
+  {
+    "monto_mxn": 150000,
+    "cliente": "Distribuidora Industrial S.A. de C.V.",
+    "rfc_cliente": "DIN890214ABC",
+    "plazo_dias": 60,
+    "uuid_cfdi": "4a71d8be-b51f-46df-9a84-18ef5560965e"
+  }
+  ```
+
+  ### Respuesta esperada · 200 OK
+
+  ```json
+  {
+    "factura_id": "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e",
+    "cfdi_status": "VIGENTE",
+    "efos_status": "LIMPIO",
+    "score": "ALTO",
+    "monto_anticipo": 132300,
+    "tasa_aplicada": 0.02,
+    "dias_promedio_pago": 32,
+    "clabe_virtual": "012180001234567890",
+    "decision": "aprobada"
+  }
+  ```
+
+  `clabe_virtual` debe regresar como string para conservar ceros iniciales y
+  `tasa_aplicada` es una fracción: `0.02` representa 2%. La CLABE ficticia se
+  devuelve incluso en casos sin oferta; no implica aprobación ni desembolso.

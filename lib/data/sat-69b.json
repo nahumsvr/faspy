@@ -1,0 +1,50 @@
+[
+  {
+    "rfc": "DIN890214ABC",
+    "razon_social": "Distribuidora Industrial S.A. de C.V.",
+    "clasificacion": "LIMPIO",
+    "motivo": "Sin incidencias en el catálogo SAT 69-B sintético."
+  },
+  {
+    "rfc": "COM760315QRS",
+    "razon_social": "Comercializadora del Centro S.A. de C.V.",
+    "clasificacion": "LIMPIO",
+    "motivo": "Sin incidencias en el catálogo SAT 69-B sintético."
+  },
+  {
+    "rfc": "LOG850722MNO",
+    "razon_social": "Logística del Bajío S.A. de C.V.",
+    "clasificacion": "LIMPIO",
+    "motivo": "Sin incidencias en el catálogo SAT 69-B sintético."
+  },
+  {
+    "rfc": "TEC910108JKL",
+    "razon_social": "Tecnología y Componentes del Pacífico S.A. de C.V.",
+    "clasificacion": "LIMPIO",
+    "motivo": "Sin incidencias en el catálogo SAT 69-B sintético."
+  },
+  {
+    "rfc": "SER930927DEF",
+    "razon_social": "Servicios Empresariales del Golfo S.A. de C.V.",
+    "clasificacion": "LIMPIO",
+    "motivo": "Sin incidencias en el catálogo SAT 69-B sintético."
+  },
+  {
+    "rfc": "ALM800411GHI",
+    "razon_social": "Alimentos del Valle S.A. de C.V.",
+    "clasificacion": "LIMPIO",
+    "motivo": "Sin incidencias en el catálogo SAT 69-B sintético."
+  },
+  {
+    "rfc": "CON950603VWX",
+    "razon_social": "Construcciones del Sureste S.A. de C.V.",
+    "clasificacion": "EFOS",
+    "motivo": "Etiqueta EFOS simplificada para la demostración del catálogo 69-B."
+  },
+  {
+    "rfc": "MAN870119TUV",
+    "razon_social": "Manufacturas del Altiplano S.A. de C.V.",
+    "clasificacion": "EDOS",
+    "motivo": "Etiqueta EDOS simplificada para la demostración del catálogo 69-B."
+  }
+]
