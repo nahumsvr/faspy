@@ -1,0 +1,28 @@
+{
+  "invoice": {
+    "monto_mxn": 150000,
+    "cliente": "Distribuidora Industrial S.A. de C.V.",
+    "rfc_cliente": "DIN890214ABC",
+    "plazo_dias": 60,
+    "uuid_cfdi": "4a71d8be-b51f-46df-9a84-18ef5560965e"
+  },
+  "response": {
+    "factura_id": "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e",
+    "cfdi_status": "VIGENTE",
+    "efos_status": "LIMPIO",
+    "score": "ALTO",
+    "monto_anticipo": 132300,
+    "tasa_aplicada": 0.02,
+    "dias_promedio_pago": 32,
+    "clabe_virtual": "012180001234567890",
+    "decision": "aprobada"
+  },
+  "payment": {
+    "factura_id": "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e",
+    "principal_retenido": 132300,
+    "comision_cobrada": 3000,
+    "remanente_dispersado": 14700,
+    "margen_neto_pct": 0.02
+  },
+  "depositDate": "2026-09-13T10:00:00.000Z"
+}

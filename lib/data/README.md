@@ -98,3 +98,9 @@ La distribución del historial es:
 
 La validación automatizada de estos invariantes vive en
 [`tests/data.test.mts`](../../tests/data.test.mts) y se ejecuta con `pnpm test`.
+
+## Integración para main · septiembre 2026
+
+Se conserva el motor general de develop y sus fixtures originales, incluyendo aprobación, revisión y rechazo. Se incorporan aceptación y pago de la rama financiera, limitados a `lib/data/scenario.json`. Por decisión explícita del usuario, prevalece el anticipo de 132300 MXN, días promedio 32 e ID FAC seguido del UUID; liquidación con principal 132300, comisión 3000 y remanente 14700. La comisión se conserva del escenario financiero; no se generaliza una fórmula ni se modifica el motor de scoring. Se añade scenario.json sin alterar la estructura de los otros fixtures.
+
+El dashboard existe, pero sus métricas no consumen las operaciones emitidas. La demo básica del ERP usa Express y lib/api.ts. `/emision` puede encadenar los tres endpoints para el caso documentado. No hay persistencia, secuencia, idempotencia ni transferencias reales. README actualizado con arranque Windows/macOS, conexión ERP, rutas, demo y verificación. Esta sección sustituye los estados históricos de endpoints pendientes.

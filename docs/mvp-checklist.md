@@ -173,3 +173,15 @@ flowchart TD
 - [x] El navegador del ERP consulta `/api/emitir-factura` y presenta la respuesta del motor, sin cálculos financieros locales.
 - [x] Configuración: ERP en `http://localhost:3001`, `NEXT_PUBLIC_API_URL=http://localhost:3000`; core permite ese origen con `ERP_ORIGIN`.
 - El dashboard conserva sus datos ilustrativos independientes; esta demo no agrega persistencia, depósito ni liquidación.
+
+## Integración para main · septiembre 2026
+
+Se conserva el motor general de develop y sus fixtures originales, incluyendo aprobación, revisión y rechazo. Se incorporan aceptación y pago de la rama financiera, limitados a `lib/data/scenario.json`. Por decisión explícita del usuario, prevalece el anticipo de 132300 MXN, días promedio 32 e ID FAC seguido del UUID; liquidación con principal 132300, comisión 3000 y remanente 14700. La comisión se conserva del escenario financiero; no se generaliza una fórmula ni se modifica el motor de scoring. Se añade scenario.json sin alterar la estructura de los otros fixtures.
+
+El dashboard existe, pero sus métricas no consumen las operaciones emitidas. La demo básica del ERP usa Express y lib/api.ts. `/emision` puede encadenar los tres endpoints para el caso documentado. No hay persistencia, secuencia, idempotencia ni transferencias reales. README actualizado con arranque Windows/macOS, conexión ERP, rutas, demo y verificación. Esta sección sustituye los estados históricos de endpoints pendientes.
+
+### Validación de integración a main
+
+- `pnpm check`: lint, tipos, 30 pruebas y build de producción correctos.
+- `pnpm test:smoke`: aprobación, rechazo, revisión, auditoría, CORS, dashboard, anticipo y liquidación por HTTP correctos.
+- La rama codex/fixtures-sinteticos-deterministas no aporta parches pendientes: sus cuatro commits ya tienen equivalentes en develop.

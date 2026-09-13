@@ -1,5 +1,5 @@
 info:
-  name: Simular pago (contrato)
+  name: simular-pago (demo)
   type: http
   seq: 5
 http:
@@ -12,7 +12,7 @@ http:
       value: application/json
   body:
     type: json
-    data: '{"facturaId":"FAC-2026-001"}'
+    data: '{"facturaId": "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e"}'
 runtime:
   assertions:
     - expression: res.status
@@ -20,37 +20,29 @@ runtime:
       value: "200"
     - expression: res.body.factura_id
       operator: eq
-      value: FAC-2026-001
+      value: "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e"
+    - expression: res.body.principal_retenido
+      operator: eq
+      value: "132300"
+    - expression: res.body.comision_cobrada
+      operator: eq
+      value: "3000"
+    - expression: res.body.remanente_dispersado
+      operator: eq
+      value: "14700"
     - expression: res.body.margen_neto_pct
       operator: eq
       value: "0.02"
 docs: |
-  Contrato esperado para simular el pago y la liquidación de una factura fondeada.
-  Esta request quedará ejecutable cuando se implemente POST /api/simular-pago;
-  actualmente es una referencia de integración y responderá 404.
-
-  Ejemplo legado independiente: no encadenar con la oferta nueva de emisión.
-  La política de liquidación y la unidad de margen_neto_pct quedan pendientes
-  de coordinación con el ERP; estos importes no son resultados del motor 1.3.
-
-  ### Petición
+  Respuesta determinista del escenario documentado. No guarda estado ni ejecuta transferencias.
+  IDs distintos devuelven 422 SCENARIO_NOT_SUPPORTED; JSON o campos inválidos, 400.
 
   ```json
   {
-    "facturaId": "FAC-2026-001"
-  }
-  ```
-
-  ### Respuesta esperada · 200 OK
-
-  ```json
-  {
-    "factura_id": "FAC-2026-001",
-    "principal_retenido": 120000,
+    "factura_id": "FAC-4a71d8be-b51f-46df-9a84-18ef5560965e",
+    "principal_retenido": 132300,
     "comision_cobrada": 3000,
-    "remanente_dispersado": 27000,
+    "remanente_dispersado": 14700,
     "margen_neto_pct": 0.02
   }
   ```
-
-  `margen_neto_pct` es numérico y se expresa como fracción; `0.02` representa 2%.

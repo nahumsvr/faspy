@@ -125,3 +125,27 @@ const root = await request("/", { redirect: "manual" });
 assert.equal(root.status, 307);
 assert.equal(root.headers.get("Location"), "/dashboard");
 console.log("HTTP OK: health, emisión, auditoría, scoring, CORS, preflight, errores, dashboard y redirect.");
+
+// Ruta financiera fija: los importes deben conservarse de emisión a liquidación.
+const financialId = 'FAC-4a71d8be-b51f-46df-9a84-18ef5560965e';
+for (const path of ['/api/aceptar-anticipo', '/api/simular-pago']) {
+  const options = await request(path, { method: 'OPTIONS', headers: { Origin: origin } });
+  assert.equal(options.status, 204);
+  assert.equal(options.headers.get('Access-Control-Allow-Origin'), origin);
+  const invalidId = await postJson(path, { facturaId: 'no-soportada' });
+  assert.equal(invalidId.status, 422);
+  assert.equal((await invalidId.json()).error.code, 'SCENARIO_NOT_SUPPORTED');
+}
+const depositResponse = await postJson('/api/aceptar-anticipo', { facturaId: financialId });
+assert.equal(depositResponse.status, 200);
+const deposit = await depositResponse.json();
+assert.equal(deposit.factura_id, financialId);
+assert.equal(deposit.monto_depositado, 132300);
+const paymentResponse = await postJson('/api/simular-pago', { facturaId: financialId });
+assert.equal(paymentResponse.status, 200);
+const payment = await paymentResponse.json();
+assert.equal(payment.principal_retenido, deposit.monto_depositado);
+assert.equal(payment.comision_cobrada, 3000);
+assert.equal(payment.remanente_dispersado, 14700);
+assert.equal(payment.principal_retenido + payment.comision_cobrada + payment.remanente_dispersado, 150000);
+console.log('HTTP OK: anticipo, liquidación, CORS y escenarios no soportados.');

@@ -28,5 +28,6 @@ Access-Control-Allow-Origin. No se necesitan credenciales.
 
 La colección de Postman mencionada anteriormente en AGENTS.md se sustituye por el
 workspace Bruno existente; los checks automatizados de HTTP viven en scripts/smoke.mjs.
-Las requests de emisión, auditoría y scoring son ejecutables con la API actual; las
-de anticipo y liquidación siguen documentando contratos de fases posteriores.
+Las requests de emisión, auditoría y scoring son ejecutables con la API actual.
+Anticipo y liquidación también están implementados para el escenario documentado;
+las llamadas no guardan estado ni verifican secuencia.
