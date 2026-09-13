@@ -1,0 +1,20 @@
+[
+  {
+    "id": "8d6f2a10-7b34-4c98-a521-0e3f6d8b9a41",
+    "nombre": "Comercializadora del Centro S.A. de C.V.",
+    "rfc": "COM760315QRS",
+    "motivo": "Coincidencia con una entidad sancionada en la lista OFAC sintética."
+  },
+  {
+    "id": "9e704b21-8c45-4da9-b632-1f4a7e9c0b52",
+    "nombre": "Logística del Bajío S.A. de C.V.",
+    "rfc": "LOG850722MNO",
+    "motivo": "Coincidencia con una entidad sancionada en la lista OFAC sintética."
+  },
+  {
+    "id": "af815c32-9d56-4eb0-8c43-2a5b8f0d1c63",
+    "nombre": "Tecnología y Componentes del Pacífico S.A. de C.V.",
+    "rfc": "TEC910108JKL",
+    "motivo": "Coincidencia con una entidad sancionada en la lista OFAC sintética."
+  }
+]

@@ -23,7 +23,7 @@ faspy/
 │   │   └── mercado/page.tsx         🟡 Placeholder ("En preparación")
 ├── lib/
 │   ├── api/response.ts              ✅ OK (CORS para ERP_ORIGIN, apiJson, apiOptions)
-│   ├── data/                        ❌ Vacío (Solo README, sin fixtures JSON)
+│   ├── data/                        ✅ Fixtures sintéticos deterministas (SAT, OFAC, deudores e historial)
 │   └── engine/                      ❌ Vacío (Solo README, sin reglas ni algoritmos)
 ├── types/
 │   └── schema.ts                    🟡 Incompleto (Solo HealthResponse y ApiError)
@@ -44,7 +44,7 @@ faspy/
 |---|---|---|:---:|
 | **Infraestructura & CI** | Next.js 16, TypeScript, Tailwind 4, scripts de validación, CORS. | Completada. | **0%** |
 | **Contrato de Datos (`types/schema.ts`)** | Sincronizado al 100% con `erp-faspy` (CFDI, Factoraje, Compliance, Scoring, Anticipo y Liquidación). | Contrato CFDI, Factoraje, Compliance, Scoring y Métricas. | **0%** |
-| **Fixtures Sintéticos (`lib/data/`)** | README vacío. | Listas SAT 69-B, OFAC, catálogo deudores, facturas sintéticas. | **100%** |
+| **Fixtures Sintéticos (`lib/data/`)** | Cuatro JSON sintéticos deterministas, tipos internos, documentación y pruebas de invariantes. | Listas SAT 69-B, OFAC, catálogo deudores, facturas sintéticas. | **0%** |
 | **Motor de Simulación (`lib/engine/`)** | README vacío. | Funciones puras: validación fiscal, scoring crediticio, aforo/descuento. | **100%** |
 | **Endpoints API (`app/api/`)** | Solo `/api/health`. | `/api/emitir-factura` (+700ms), `/api/validar`, `/api/scoring`. | **80%** |
 | **Dashboard UI (`app/dashboard/`)** | 4 pantallas con placeholders. | Centro de Operaciones, Cumplimiento, Matriz de Decisión y TAM/SAM con componentes Claymorphic e interactividad. | **85%** |
@@ -74,11 +74,11 @@ faspy/
   - [x] Sincronizar contrato con `erp-faspy/types/schema.ts` (espejo exacto, plano, serialización de CLABE y validado con tests).
   - [x] Añadir casos de compilación y pruebas en `tests/schema.test.mts`.
   - [x] Actualizar documentación de contrato y colección Bruno (`docs/faspy/contract.md`).
-- [ ] **Tarea 1.2: Fixtures Sintéticos Deterministas (`lib/data/*.json`)**
-  - [ ] `sat-69b.json`: Lista de RFCs simulados clasificados (empresas fantasma EFOS/EDOS vs limpias).
-  - [ ] `ofac-sanctions.json`: Lista de personas/entidades simuladas para sanción internacional.
-  - [ ] `debtors.json`: Catálogo de 5-10 pagadores clave con historial crediticio, días promedio de pago y calificación.
-  - [ ] `invoices-history.json`: Lote de 15-20 facturas con estados diversos para precargar el dashboard.
+- [x] **Tarea 1.2: Fixtures Sintéticos Deterministas (`lib/data/*.json`)**
+  - [x] `sat-69b.json`: Ocho RFCs simulados con seis registros limpios, uno EFOS y uno EDOS.
+  - [x] `ofac-sanctions.json`: Tres entidades ficticias sancionadas con alertas independientes del SAT.
+  - [x] `debtors.json`: Ocho pagadores, dos por cada calificación A–D, con historial y límite de exposición.
+  - [x] `invoices-history.json`: Dieciocho facturas con 9 aprobadas, 4 en revisión y 5 rechazadas.
 - [ ] **Tarea 1.3: Motor Puro de Simulación (`lib/engine/*.ts`)**
   - [ ] `compliance.ts`: Validación de RFC contra 69-B y OFAC; validación sintáctica de CFDI y CLABE SPEI.
   - [ ] `scoring.ts`: Algoritmo determinista de scoring en base al pagador, monto y plazo (30/60/90 días).
@@ -143,7 +143,7 @@ flowchart TD
 
 ### Paso 1: Bloqueador Inicial (Inmediato)
 - P1 y el encargado del ERP aprueban los tipos en [`types/schema.ts`](../types/schema.ts).
-- P1 crea los archivos JSON sintéticos en [`lib/data/`](../lib/data) para que ambos (backend y frontend) tengan datos reales de trabajo.
+- P1: ✅ Dejó los archivos JSON sintéticos en [`lib/data/`](../lib/data) para que ambos (backend y frontend) tengan datos deterministas de trabajo.
 
 ### Paso 2: Desarrollo Paralelo
 - **P1**: Construye `lib/engine/compliance.ts` y `lib/engine/scoring.ts` con pruebas unitarias (`pnpm test`).
