@@ -69,7 +69,7 @@ export default function DashboardHomePage() {
               Modela el costo financiero, los niveles de aforo y el score crediticio interactuando con el simulador de capital.
             </p>
             <Link href="/dashboard/matriz">
-              <Button variant="outlined" className="w-full sm:w-auto">
+              <Button variant="secondary" className="w-full sm:w-auto">
                 Abrir Matriz
               </Button>
             </Link>
