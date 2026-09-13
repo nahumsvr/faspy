@@ -29,6 +29,10 @@ docs: |
   Esta request quedará ejecutable cuando se implemente POST /api/simular-pago;
   actualmente es una referencia de integración y responderá 404.
 
+  Ejemplo legado independiente: no encadenar con la oferta nueva de emisión.
+  La política de liquidación y la unidad de margen_neto_pct quedan pendientes
+  de coordinación con el ERP; estos importes no son resultados del motor 1.3.
+
   ### Petición
 
   ```json

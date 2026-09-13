@@ -9,4 +9,7 @@ collections:
 
 specs:
 
-docs: ''
+docs: |
+  Motor 1.3 implementado. Requests de negocio pendientes de endpoints (tarea 1.4).
+  Emisión de referencia: anticipo 132300 MXN, tasa 0.02, pago promedio 32 días.
+  Simular pago conserva un ejemplo legado independiente pendiente de definición.

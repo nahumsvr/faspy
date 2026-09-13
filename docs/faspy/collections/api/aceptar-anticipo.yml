@@ -24,6 +24,9 @@ runtime:
     - expression: res.body.estado
       operator: eq
       value: FONDEADA
+    - expression: res.body.monto_depositado
+      operator: eq
+      value: "132300"
 docs: |
   Contrato esperado para aceptar el anticipo de una factura previamente aprobada.
   Esta request quedará ejecutable cuando se implemente POST /api/aceptar-anticipo;
@@ -45,7 +48,7 @@ docs: |
   {
     "factura_id": "FAC-2026-001",
     "estado": "FONDEADA",
-    "monto_depositado": 120000,
+    "monto_depositado": 132300,
     "fecha_deposito": "2026-09-13T10:00:00Z"
   }
   ```
