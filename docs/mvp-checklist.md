@@ -126,11 +126,11 @@ faspy/
 - [x] **Tarea 3.4: Módulo TAM / SAM / SOM (`app/dashboard/mercado/`)**
   - [x] Desglose visual del mercado de factoraje en México (TAM: Valor de facturación B2B; SAM: Factoraje accesible a PyMEs; SOM: Objetivo EcoStream).
   - [x] Calculadora de impacto económico: Ganancia de días de caja (DSO reducido de 75 a 1 día) y retorno para la empresa.
-- [ ] **Tarea 3.5: Centro de Operaciones / Resumen General (`app/dashboard/page.tsx`)**
-  - [ ] Vista ejecutiva unificada: Widgets que conectan Cumplimiento, Decisión de Liquidez y Métricas clave.
-  - [ ] Feed en vivo simulado de transacciones recientes.
-- [ ] **Tarea 3.6: Layout y Navegación Flotante (`app/dashboard/layout.tsx`)**
-  - [ ] Mejorar la barra de navegación `glass-bar` para mostrar rutas activas, estado del simulador ("Modo: Simulación Activa") y acceso rápido a los 3 submódulos.
+- [x] **Tarea 3.5: Centro de Operaciones / Resumen General (`app/dashboard/page.tsx`)**
+  - [x] Vista ejecutiva unificada: Widgets que conectan Cumplimiento, Decisión de Liquidez y Métricas clave.
+  - [x] Feed en vivo simulado de transacciones recientes.
+- [x] **Tarea 3.6: Layout y Navegación Flotante (`app/dashboard/layout.tsx`)**
+  - [x] Mejorar la barra de navegación `glass-bar` para mostrar rutas activas, estado del simulador ("Modo: Simulación Activa") y acceso rápido a los 3 submódulos.
 
 ---
 
