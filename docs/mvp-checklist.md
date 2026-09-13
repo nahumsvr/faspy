@@ -92,7 +92,7 @@ faspy/
   - [ ] `GET /api/compliance/audit`: Listado de auditoría de facturas validadas.
   - [ ] `POST /api/scoring/simulate`: Endpoint para recálculo dinámico desde el slider del dashboard.
 - [ ] **Tarea 1.5: Pruebas y Colección Bruno**
-  - [ ] Añadir peticiones en `docs/faspy/collections/api/` (`emitir-factura.yml`, `scoring.yml`, etc.).
+  - [x] Añadir peticiones en `docs/faspy/collections/api/` (`emitir-factura.yml`, `scoring-simulate.yml`, etc.) con ejemplos de request y respuesta esperada.
   - [ ] Agregar tests unitarios en `tests/engine.test.mts` para las reglas puras.
   - [ ] Extender `scripts/smoke.mjs` con los nuevos endpoints POST.
 

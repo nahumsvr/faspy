@@ -1,0 +1,51 @@
+info:
+  name: Aceptar anticipo (contrato)
+  type: http
+  seq: 4
+http:
+  method: POST
+  url: http://localhost:3000/api/aceptar-anticipo
+  headers:
+    - name: Origin
+      value: http://localhost:3001
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: '{"facturaId":"FAC-2026-001"}'
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.factura_id
+      operator: eq
+      value: FAC-2026-001
+    - expression: res.body.estado
+      operator: eq
+      value: FONDEADA
+docs: |
+  Contrato esperado para aceptar el anticipo de una factura previamente aprobada.
+  Esta request quedará ejecutable cuando se implemente POST /api/aceptar-anticipo;
+  actualmente es una referencia de integración y responderá 404.
+
+  ### Petición
+
+  ```json
+  {
+    "facturaId": "FAC-2026-001"
+  }
+  ```
+
+  `facturaId` usa camelCase porque así lo requiere el contrato del ERP.
+
+  ### Respuesta esperada · 200 OK
+
+  ```json
+  {
+    "factura_id": "FAC-2026-001",
+    "estado": "FONDEADA",
+    "monto_depositado": 120000,
+    "fecha_deposito": "2026-09-13T10:00:00Z"
+  }
+  ```
