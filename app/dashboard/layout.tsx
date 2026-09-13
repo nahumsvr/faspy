@@ -18,7 +18,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="min-h-screen bg-gray-950 flex flex-col xl:flex-row">
-      
+
       {/* Mobile Top Navbar */}
       <div className="xl:hidden sticky top-0 z-50 bg-gray-900/90 backdrop-blur-md border-b border-gray-800 p-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
           <span className="text-white font-sans font-bold text-lg tracking-tight">EcoStream</span>
         </div>
-        <button 
+        <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="text-gray-400 hover:text-white p-2"
         >
@@ -49,8 +49,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   href={item.path}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`block px-4 py-3 rounded-2xl text-base font-semibold transition-all ${
-                    isActive 
-                      ? 'bg-primary/20 text-white border border-primary/30' 
+                    isActive
+                      ? 'bg-primary/20 text-white border border-primary/30'
                       : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
                 >

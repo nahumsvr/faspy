@@ -64,7 +64,7 @@ export function ThemeToggle() {
 
   return (
     <div className="w-full flex justify-center mt-4">
-      <SegmentedControl 
+      <SegmentedControl
         options={[
           { label: 'Claro', value: 'light' },
           { label: 'Oscuro', value: 'dark' },
