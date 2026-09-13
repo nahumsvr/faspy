@@ -43,7 +43,7 @@ faspy/
 | Capa | Estado Actual | Meta MVP | Brecha (% pendiente) |
 |---|---|---|:---:|
 | **Infraestructura & CI** | Next.js 16, TypeScript, Tailwind 4, scripts de validación, CORS. | Completada. | **0%** |
-| **Contrato de Datos (`types/schema.ts`)** | Solo `HealthResponse` y `ApiError`. | Contrato CFDI, Factoraje, Compliance, Scoring y Métricas. | **85%** |
+| **Contrato de Datos (`types/schema.ts`)** | Sincronizado al 100% con `erp-faspy` (CFDI, Factoraje, Compliance, Scoring, Anticipo y Liquidación). | Contrato CFDI, Factoraje, Compliance, Scoring y Métricas. | **0%** |
 | **Fixtures Sintéticos (`lib/data/`)** | README vacío. | Listas SAT 69-B, OFAC, catálogo deudores, facturas sintéticas. | **100%** |
 | **Motor de Simulación (`lib/engine/`)** | README vacío. | Funciones puras: validación fiscal, scoring crediticio, aforo/descuento. | **100%** |
 | **Endpoints API (`app/api/`)** | Solo `/api/health`. | `/api/emitir-factura` (+700ms), `/api/validar`, `/api/scoring`. | **80%** |
@@ -51,15 +51,16 @@ faspy/
 
 ---
 
-## 2. El Cuello de Botella Crítico (Hito #1 Inmediato)
+## 2. El Cuello de Botella Crítico (Hito #1: RESUELTO ✅)
 
-> [!IMPORTANT]
-> **Sincronización del Contrato `types/schema.ts`**:
-> El archivo `types/schema.ts` es el espejo estricto entre este simulador y el ERP (`ecostream-erp` / `erp-faspy`).  
-> **P1 no puede crear las fixtures finales ni los endpoints**, y **P3 no puede poblar las vistas del dashboard**, hasta que definan los tipos de:
-> 1. Factura / CFDI emitido (UUID, RFC emisor, RFC receptor, monto, fecha de vencimiento, plazos 30/60/90 días).
-> 2. Resultado de Validación de Cumplimiento (Lista 69-B SAT, OFAC, estado de cuenta SPEI).
-> 3. Oferta de Factoraje & Scoring (Score de riesgo A-E / 0-100, tasa de descuento/aforo, liquidez inmediata neta, spread Capital One).
+> [!NOTE]
+> **Sincronización del Contrato `types/schema.ts` Completada**:
+> El archivo `types/schema.ts` ha quedado sincronizado como espejo exacto con `erp-faspy`.
+> Se modelaron los contratos para:
+> 1. Factura / CFDI emitido (`InvoiceCFDI` plano: `monto_mxn`, `cliente`, `rfc_cliente`, `plazo_dias`, `uuid_cfdi`).
+> 2. Resultado de Validación de Cumplimiento (`ComplianceReport`: `cfdi_status`, `efos_status`).
+> 3. Oferta de Factoraje & Scoring (`EmitirFacturaResponse`: `score`, `monto_anticipo`, `tasa_aplicada`, `dias_promedio_pago`, `clabe_virtual`, `decision`).
+> 4. Flujo de anticipo y liquidación (`AceptarAnticipoRequest`, `AnticipoConfirmado`, `SimularPagoRequest`, `ResultadoPago`).
 
 ---
 
@@ -68,11 +69,11 @@ faspy/
 ### 🟦 Frente P1: Motor de Simulación, Datos y API
 *Responsable de la lógica pura, datos sintéticos y endpoints HTTP.*
 
-- [ ] **Tarea 1.1: Definición de Esquemas (`types/schema.ts`)**
-  - [ ] Modelar `InvoiceCFDI` (datos fiscales, conceptos, montos, receptor).
-  - [ ] Modelar `ComplianceReport` (estado 69-B: limpio/presunto/definitivo; OFAC: cleared/flagged; SPEI: verificado).
-  - [ ] Modelar `ScoringDecision` (riskScore, tier, porcentajeAforo, tasaDescuento, comisionCapitalOne, montoDesembolsoInmediato).
-  - [ ] Modelar `EmitirFacturaRequest` y `EmitirFacturaResponse`.
+- [x] **Tarea 1.1: Definición de Esquemas (`types/schema.ts`)**
+  - [x] Modelar `InvoiceCFDI`, `ComplianceReport`, `ScoringDecision`, `EmitirFacturaRequest` y `EmitirFacturaResponse`.
+  - [x] Sincronizar contrato con `erp-faspy/types/schema.ts` (espejo exacto, plano, serialización de CLABE y validado con tests).
+  - [x] Añadir casos de compilación y pruebas en `tests/schema.test.mts`.
+  - [x] Actualizar documentación de contrato y colección Bruno (`docs/faspy/contract.md`).
 - [ ] **Tarea 1.2: Fixtures Sintéticos Deterministas (`lib/data/*.json`)**
   - [ ] `sat-69b.json`: Lista de RFCs simulados clasificados (empresas fantasma EFOS/EDOS vs limpias).
   - [ ] `ofac-sanctions.json`: Lista de personas/entidades simuladas para sanción internacional.
