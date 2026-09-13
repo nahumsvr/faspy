@@ -72,13 +72,13 @@ export default function MatrizDecisionPage() {
           
           <div className="flex justify-between items-start mb-8">
             <h2 className="text-xl font-semibold text-white">Dictamen del Motor</h2>
-            <BadgeStatus status="success">EcoStream Aprobado</BadgeStatus>
+            <BadgeStatus status="success">Faspy Aprobado</BadgeStatus>
           </div>
 
           <div className="bg-gray-950/60 rounded-xl border border-gray-800 p-6 mb-8">
             <h3 className="text-sm font-medium text-gray-400 mb-3">Producto Estructurado Recomendado</h3>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Basado en un requerimiento para <strong className="text-white">{necesidadesOptions.find(o => o.value === necesidad)?.label}</strong> por un volumen anual de <strong className="text-white font-mono">{(monto).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong>, el motor aprueba una línea de factoraje revolvente en esquema <strong className="text-primary font-bold">EcoStream</strong>.
+              Basado en un requerimiento para <strong className="text-white">{necesidadesOptions.find(o => o.value === necesidad)?.label}</strong> por un volumen anual de <strong className="text-white font-mono">{(monto).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</strong>, el motor aprueba una línea de factoraje revolvente en esquema <strong className="text-primary font-bold">Faspy</strong>.
             </p>
           </div>
 

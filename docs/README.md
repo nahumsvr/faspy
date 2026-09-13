@@ -1,4 +1,4 @@
-# Documentación de EcoStream
+# Documentación de Faspy
 
 - [Plan de estructura y trabajo en paralelo](architecture/initial-setup.md).
 - [Checklist y Diagnóstico del MVP](mvp-checklist.md).
@@ -22,7 +22,7 @@ curl -i http://localhost:3000/api/health
 curl -i -X OPTIONS http://localhost:3000/api/health -H 'Origin: http://localhost:3001' -H 'Access-Control-Request-Method: GET'
 ```
 
-La respuesta GET es `{"status":"ok","service":"ecostream","mode":"simulation"}`.
+La respuesta GET es `{"status":"ok","service":"faspy","mode":"simulation"}`.
 OPTIONS retorna 204 con el origen autorizado. Otros orígenes no reciben
 Access-Control-Allow-Origin. No se necesitan credenciales.
 

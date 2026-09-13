@@ -1,7 +1,7 @@
 # Datos precargados · P1
 
 Los cuatro archivos de este directorio son fixtures sintéticos y deterministas para
-la demo de Capital One EcoStream. Todas las empresas, RFC, sanciones, importes y
+la demo de Capital One Faspy. Todas las empresas, RFC, sanciones, importes y
 decisiones son ficticios; no representan personas o entidades reales ni consultan
 SAT, OFAC, SPEI o ningún servicio externo. Los resultados de `invoices-history.json`
 son ejemplos precalculados: esta tarea no define umbrales ni algoritmos de scoring.

@@ -9,7 +9,7 @@ export default function DashboardHomePage() {
       {/* Header */}
       <div className="mb-12">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white font-sans mb-3">
-          Centro de Operaciones EcoStream
+          Centro de Operaciones Faspy
         </h1>
         <p className="text-gray-400 text-sm max-w-3xl leading-relaxed">
           Bienvenido al centro de mando. Desde aquí puedes monitorear el estado global de la liquidez, revisar transacciones pendientes y gestionar el riesgo de tus clientes.

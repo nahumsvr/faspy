@@ -11,7 +11,7 @@ export default function MercadoPage() {
           Dimensionamiento de Mercado (TAM / SAM / SOM)
         </h1>
         <p className="text-gray-400 text-sm max-w-2xl leading-relaxed">
-          Proyección estratégica del mercado de factoraje en México y la oportunidad de penetración comercial para EcoStream.
+          Proyección estratégica del mercado de factoraje en México y la oportunidad de penetración comercial para Faspy.
         </p>
       </div>
 
@@ -41,7 +41,7 @@ export default function MercadoPage() {
         <div className="relative group">
           <div className="absolute -inset-0.5 bg-gradient-to-r from-secondary/50 to-primary/50 rounded-2xl blur opacity-40 group-hover:opacity-70 transition duration-500"></div>
           <MetricCard 
-            title="Objetivo EcoStream Año 1 (SOM)" 
+            title="Objetivo Faspy Año 1 (SOM)"
             value="$5B MXN" 
             className="relative h-full border-secondary/30 [&_p.font-mono]:!text-secondary"
           />

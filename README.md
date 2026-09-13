@@ -1,6 +1,6 @@
-# EcoStream · Faspy
+# Faspy
 
-Backend y dashboard del simulador Capital One EcoStream. Todas las validaciones son
+Backend y dashboard del simulador Capital One Faspy. Todas las validaciones son
 simuladas; sin autenticación, base de datos ni conexiones reales a SAT, SPEI u OFAC.
 
 ## Desarrollo

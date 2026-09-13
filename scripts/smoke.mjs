@@ -11,7 +11,7 @@ const postJson = (path, body, requestOrigin = origin) => request(path, {
 const health = await request("/api/health", { headers: { Origin: origin } });
 assert.equal(health.status, 200);
 assert.equal(health.headers.get("Access-Control-Allow-Origin"), origin);
-assert.deepEqual(await health.json(), { status: "ok", service: "ecostream", mode: "simulation" });
+assert.deepEqual(await health.json(), { status: "ok", service: "faspy", mode: "simulation" });
 const preflight = await request("/api/health", { method: "OPTIONS", headers: {
   Origin: origin, "Access-Control-Request-Method": "GET", "Access-Control-Request-Headers": "Content-Type",
 } });
@@ -119,7 +119,7 @@ assert.equal(deniedAudit.headers.has("Access-Control-Allow-Origin"), false);
 for (const path of ["/dashboard", "/dashboard/cumplimiento", "/dashboard/decision", "/dashboard/mercado"]) {
   const response = await request(path);
   assert.equal(response.status, 200, path);
-  assert.match(await response.text(), /EcoStream/);
+  assert.match(await response.text(), /Faspy/);
 }
 const root = await request("/", { redirect: "manual" });
 assert.equal(root.status, 307);

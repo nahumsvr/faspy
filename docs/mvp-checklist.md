@@ -1,6 +1,6 @@
-# EcoStream · Faspy: Diagnóstico de Estado y Checklist para el MVP
+# Faspy: Diagnóstico de Estado y Checklist para el MVP
 
-> **Entorno:** Hackathon Capital One EcoStream  
+> **Entorno:** Hackathon Capital One Faspy
 > **Alcance de este repositorio:** Backend / Motor de Simulación (`app/api`, `lib/engine`) y Dashboard (`app/dashboard`).  
 > **Filosofía central:** Simulación determinista sin backend real, sin base de datos real y sin conexión a SAT/SPEI/OFAC.
 
@@ -69,6 +69,9 @@ faspy/
 
 ## 3. Checklist y Tareas por Rol
 
+- [x] Unificar el nombre Faspy en dashboard, metadatos, documentación y healthcheck (`service: "faspy"`), incluyendo contrato, Bruno y smoke tests.
+- Coordinación ERP: reflejar el literal `HealthResponse.service: "faspy"` en el contrato espejo de `erp-faspy`.
+
 ### 🟦 Frente P1: Motor de Simulación, Datos y API
 *Responsable de la lógica pura, datos sintéticos y endpoints HTTP.*
 
@@ -124,7 +127,7 @@ faspy/
   - [x] Scorecard de Deudor: Gráfico o tabla de ratings (A, B, C, D) con límites de exposición y tasas asignadas.
   - [x] Visualización del flujo de fondos (Diagrama o steps: Factura emitida ➔ Validación ➔ Desembolso inmediato en T+0).
 - [x] **Tarea 3.4: Módulo TAM / SAM / SOM (`app/dashboard/mercado/`)**
-  - [x] Desglose visual del mercado de factoraje en México (TAM: Valor de facturación B2B; SAM: Factoraje accesible a PyMEs; SOM: Objetivo EcoStream).
+  - [x] Desglose visual del mercado de factoraje en México (TAM: Valor de facturación B2B; SAM: Factoraje accesible a PyMEs; SOM: Objetivo Faspy).
   - [x] Calculadora de impacto económico: Ganancia de días de caja (DSO reducido de 75 a 1 día) y retorno para la empresa.
 - [x] **Tarea 3.5: Centro de Operaciones / Resumen General (`app/dashboard/page.tsx`)**
   - [x] Vista ejecutiva unificada: Widgets que conectan Cumplimiento, Decisión de Liquidez y Métricas clave.
@@ -163,3 +166,10 @@ flowchart TD
 ### Paso 4: Demo Final y Validación
 - ✅ Ejecutar `pnpm check` y `pnpm test:smoke`; verificar además emisión, auditoría, scoring, CORS, preflight y errores mediante curls contra el servidor activo.
 - Conectar una prueba de emisión desde el ERP al simulador y observar cómo se refleja el estado de cumplimiento y la oferta de factoraje en el dashboard.
+
+## Integración de demo ERP
+
+- [x] `erp-faspy/public/` incluye captura editable y escenarios de aprobación, rechazo fiscal y revisión.
+- [x] El navegador del ERP consulta `/api/emitir-factura` y presenta la respuesta del motor, sin cálculos financieros locales.
+- [x] Configuración: ERP en `http://localhost:3001`, `NEXT_PUBLIC_API_URL=http://localhost:3000`; core permite ese origen con `ERP_ORIGIN`.
+- El dashboard conserva sus datos ilustrativos independientes; esta demo no agrega persistencia, depósito ni liquidación.

@@ -18,7 +18,7 @@ runtime:
       value: ok
     - expression: res.body.service
       operator: eq
-      value: ecostream
+      value: faspy
     - expression: res.body.mode
       operator: eq
       value: simulation
@@ -31,7 +31,7 @@ docs: |
   ```json
   {
     "status": "ok",
-    "service": "ecostream",
+    "service": "faspy",
     "mode": "simulation"
   }
   ```

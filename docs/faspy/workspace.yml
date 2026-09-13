@@ -10,6 +10,7 @@ collections:
 specs:
 
 docs: |
+  Healthcheck de Faspy: GET /api/health responde service: "faspy".
   Motor 1.3 y endpoints de la tarea 1.4 implementados. Las requests de emisión,
   auditoría y scoring son ejecutables y cubren aprobación, casos sin oferta,
   errores y preflight CORS. Emisión de referencia: anticipo 132300 MXN, tasa

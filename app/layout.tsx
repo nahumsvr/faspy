@@ -6,7 +6,7 @@ const sans = Plus_Jakarta_Sans({ variable: "--font-jakarta", subsets: ["latin"],
 const mono = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "EcoStream · Simulador",
+  title: "Faspy · Simulador",
   description: "Dashboard de cumplimiento y liquidez simulada",
 };
 

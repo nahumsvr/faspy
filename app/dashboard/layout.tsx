@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-lg">
             <span className="text-white font-bold text-sm font-sans">ES</span>
           </div>
-          <span className="text-white font-sans font-bold text-lg tracking-tight">EcoStream</span>
+          <span className="text-white font-sans font-bold text-lg tracking-tight">Faspy</span>
         </div>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -73,7 +73,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-[0_0_15px_rgba(0,73,119,0.5)] border border-blue-500/30">
             <span className="text-white font-bold text-lg font-sans">ES</span>
           </div>
-          <span className="text-white font-sans font-bold text-xl tracking-tight">EcoStream</span>
+          <span className="text-white font-sans font-bold text-xl tracking-tight">Faspy</span>
         </div>
         
         {/* Simulator Status Badge */}

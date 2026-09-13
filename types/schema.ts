@@ -1,7 +1,7 @@
 /** Infraestructura inicial. */
 export interface HealthResponse {
   status: "ok";
-  service: "ecostream";
+  service: "faspy";
   mode: "simulation";
 }
 

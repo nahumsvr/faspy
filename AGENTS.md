@@ -8,7 +8,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Qué es este proyecto
 
-Backend + Dashboard del simulador Capital One EcoStream para un hackathon.
+Backend + Dashboard del simulador Capital One Faspy para un hackathon.
 Next.js App Router. Este repo NO tiene login real, NO tiene base de datos real,
 NO se conecta a SAT/SPEI reales. Todo es simulado con reglas + JSON precargado.
 
