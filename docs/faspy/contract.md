@@ -45,9 +45,9 @@ Respuesta plana que incluye el informe de cumplimiento fiscal y la oferta de fac
   "cfdi_status": "VIGENTE",
   "efos_status": "LIMPIO",
   "score": "ALTO",
-  "monto_anticipo": 120000,
+  "monto_anticipo": 132300,
   "tasa_aplicada": 0.02,
-  "dias_promedio_pago": 45,
+  "dias_promedio_pago": 32,
   "clabe_virtual": "012180001234567890",
   "decision": "aprobada"
 }
@@ -73,7 +73,7 @@ Respuesta plana que incluye el informe de cumplimiento fiscal y la oferta de fac
 {
   "factura_id": "FAC-2026-001",
   "estado": "FONDEADA",
-  "monto_depositado": 120000,
+  "monto_depositado": 132300,
   "fecha_deposito": "2026-09-13T10:00:00Z"
 }
 ```
@@ -81,6 +81,11 @@ Respuesta plana que incluye el informe de cumplimiento fiscal y la oferta de fac
 ---
 
 ## 3. Simulación de Liquidación / Cobro (`POST /api/simular-pago`)
+
+Ejemplo legado independiente, no encadenable con la nueva oferta de emisión.
+La política de liquidación y la discrepancia entre porcentaje/fracción de
+`margen_neto_pct` quedan pendientes de coordinación con el ERP en esa tarea.
+No representa los resultados del motor 1.3.
 
 ### Request (`SimularPagoRequest`)
 ```json

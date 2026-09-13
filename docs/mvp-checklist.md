@@ -24,9 +24,9 @@ faspy/
 ├── lib/
 │   ├── api/response.ts              ✅ OK (CORS para ERP_ORIGIN, apiJson, apiOptions)
 │   ├── data/                        ✅ Fixtures sintéticos deterministas (SAT, OFAC, deudores e historial)
-│   └── engine/                      ❌ Vacío (Solo README, sin reglas ni algoritmos)
+│   └── engine/                      ✅ Cumplimiento, scoring y factoraje puros con pruebas
 ├── types/
-│   └── schema.ts                    🟡 Incompleto (Solo HealthResponse y ApiError)
+│   └── schema.ts                    ✅ Contrato compartido sincronizado con ERP
 ├── components/
 │   ├── dashboard/
 │   │   └── module-placeholder.tsx   🟡 Placeholder básico
@@ -45,7 +45,7 @@ faspy/
 | **Infraestructura & CI** | Next.js 16, TypeScript, Tailwind 4, scripts de validación, CORS. | Completada. | **0%** |
 | **Contrato de Datos (`types/schema.ts`)** | Sincronizado al 100% con `erp-faspy` (CFDI, Factoraje, Compliance, Scoring, Anticipo y Liquidación). | Contrato CFDI, Factoraje, Compliance, Scoring y Métricas. | **0%** |
 | **Fixtures Sintéticos (`lib/data/`)** | Cuatro JSON sintéticos deterministas, tipos internos, documentación y pruebas de invariantes. | Listas SAT 69-B, OFAC, catálogo deudores, facturas sintéticas. | **0%** |
-| **Motor de Simulación (`lib/engine/`)** | README vacío. | Funciones puras: validación fiscal, scoring crediticio, aforo/descuento. | **100%** |
+| **Motor de Simulación (`lib/engine/`)** | Cumplimiento, scoring y factoraje deterministas probados. | Funciones puras: validación fiscal, scoring crediticio, aforo/descuento. | **0%** |
 | **Endpoints API (`app/api/`)** | Solo `/api/health`. | `/api/emitir-factura` (+700ms), `/api/validar`, `/api/scoring`. | **80%** |
 | **Dashboard UI (`app/dashboard/`)** | 4 pantallas con placeholders. | Centro de Operaciones, Cumplimiento, Matriz de Decisión y TAM/SAM con componentes Claymorphic e interactividad. | **85%** |
 
@@ -79,11 +79,14 @@ faspy/
   - [x] `ofac-sanctions.json`: Tres entidades ficticias sancionadas con alertas independientes del SAT.
   - [x] `debtors.json`: Ocho pagadores, dos por cada calificación A–D, con historial y límite de exposición.
   - [x] `invoices-history.json`: Dieciocho facturas con 9 aprobadas, 4 en revisión y 5 rechazadas.
-- [ ] **Tarea 1.3: Motor Puro de Simulación (`lib/engine/*.ts`)**
-  - [ ] `compliance.ts`: Validación de RFC contra 69-B y OFAC; validación sintáctica de CFDI y CLABE SPEI.
-  - [ ] `scoring.ts`: Algoritmo determinista de scoring en base al pagador, monto y plazo (30/60/90 días).
-  - [ ] `factoring.ts`: Cálculo financiero del factoraje:
+- [x] **Tarea 1.3: Motor Puro de Simulación (`lib/engine/*.ts`)**
+  - [x] `compliance.ts`: Validación de RFC contra 69-B y OFAC; validación sintáctica de CFDI y CLABE SPEI.
+  - [x] `scoring.ts`: Algoritmo determinista de scoring en base al pagador, monto y plazo (30/60/90 días).
+  - [x] `factoring.ts`: Cálculo financiero del factoraje:
     $$\text{Desembolso} = \text{Monto Factura} \times \text{Aforo} \times (1 - \text{Tasa Descuento}) - \text{Comisión}$$
+- Reglas 1.3: [documentación del motor](../lib/engine/README.md). OFAC exacto rechaza; desconocidos pasan a revisión; sin oferta para casos no aprobados. Historial precargado intacto.
+- Coordinación 1.4: mapear resultados internos nulos al contrato ERP y definir liquidación/unidad de margen antes de implementar ese flujo.
+
 - [ ] **Tarea 1.4: Endpoints de la API (`app/api/*`)**
   - [ ] `POST /api/emitir-factura`:
     - Simular latencia obligatoria: `await new Promise(r => setTimeout(r, 700))`.
@@ -93,7 +96,7 @@ faspy/
   - [ ] `POST /api/scoring/simulate`: Endpoint para recálculo dinámico desde el slider del dashboard.
 - [ ] **Tarea 1.5: Pruebas y Colección Bruno**
   - [x] Añadir peticiones en `docs/faspy/collections/api/` (`emitir-factura.yml`, `scoring-simulate.yml`, etc.) con ejemplos de request y respuesta esperada.
-  - [ ] Agregar tests unitarios en `tests/engine.test.mts` para las reglas puras.
+  - [x] Agregar tests unitarios en `tests/engine.test.mts` para las reglas puras.
   - [ ] Extender `scripts/smoke.mjs` con los nuevos endpoints POST.
 
 ---
@@ -146,7 +149,7 @@ flowchart TD
 - P1: ✅ Dejó los archivos JSON sintéticos en [`lib/data/`](../lib/data) para que ambos (backend y frontend) tengan datos deterministas de trabajo.
 
 ### Paso 2: Desarrollo Paralelo
-- **P1**: Construye `lib/engine/compliance.ts` y `lib/engine/scoring.ts` con pruebas unitarias (`pnpm test`).
+- **P1**: ✅ Motor 1.3 implementado con pruebas unitarias; siguiente paso: integrar endpoints 1.4.
 - **P3**: Construye las primitivas visuales y las 3 pantallas en `app/dashboard/` consumiendo directamente los JSON de `lib/data/` (así el dashboard luce espectacular sin depender de que la API esté lista).
 
 ### Paso 3: Endpoints API y Conexión

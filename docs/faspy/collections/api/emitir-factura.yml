@@ -30,6 +30,15 @@ runtime:
     - expression: res.body.decision
       operator: eq
       value: aprobada
+    - expression: res.body.monto_anticipo
+      operator: eq
+      value: "132300"
+    - expression: res.body.tasa_aplicada
+      operator: eq
+      value: "0.02"
+    - expression: res.body.dias_promedio_pago
+      operator: eq
+      value: "32"
 docs: |
   Contrato esperado para emitir y validar una factura. Esta request quedará
   ejecutable cuando se implemente POST /api/emitir-factura; actualmente es una
@@ -58,9 +67,9 @@ docs: |
     "cfdi_status": "VIGENTE",
     "efos_status": "LIMPIO",
     "score": "ALTO",
-    "monto_anticipo": 120000,
+    "monto_anticipo": 132300,
     "tasa_aplicada": 0.02,
-    "dias_promedio_pago": 45,
+    "dias_promedio_pago": 32,
     "clabe_virtual": "012180001234567890",
     "decision": "aprobada"
   }
