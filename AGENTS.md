@@ -6,4 +6,39 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
-<!-- END:nextjs-agent-rules -->
+## Qué es este proyecto
+
+Backend + Dashboard del simulador Capital One EcoStream para un hackathon.
+Next.js App Router. Este repo NO tiene login real, NO tiene base de datos real,
+NO se conecta a SAT/SPEI reales. Todo es simulado con reglas + JSON precargado.
+
+## Estructura
+
+- `app/api/*` → rutas del motor de simulación (dueño: P1)
+- `app/dashboard/*` → Centro de Cumplimiento, Matriz de Decisión, TAM/SAM (dueño: P3)
+- `lib/engine/*` → lógica pura de validación/scoring, sin efectos secundarios de red real
+- `lib/data/*.json` → datos precargados, NO modificar estructura sin avisar al equipo
+- `types/schema.ts` → contrato de datos, espejo exacto de `ecostream-erp/types/schema.ts`
+
+## Comandos
+
+- Instalar: `npm install`
+- Desarrollo: `npm run dev` (puerto 3000)
+- Build (correr SIEMPRE antes de mergear a main): `npm run build`
+- Lint: `npm run lint`
+
+## Reglas para el agente
+
+- Nunca agregues autenticación real, ORM, ni llamadas a APIs externas reales (SAT, SPEI, OFAC).
+  Todo debe resolverse con datos en `lib/data/*.json` y funciones deterministas en `lib/engine/*`.
+- Los endpoints en `app/api/*` deben responder siempre en formato JSON según `types/schema.ts`.
+  No cambies los nombres de campos existentes; si falta un campo, agrégalo sin romper los existentes.
+- Agrega un `await new Promise(r => setTimeout(r, 700))` en `/api/emitir-factura` para simular
+  latencia real de validación — es intencional, no un bug.
+- CORS: `app/api/*` debe permitir el origen de `ecostream-erp` (ver `.env.example` para la URL).
+- No toques `app/erp/*` — ese código vive en otro repo (`ecostream-erp`).
+
+## Cómo probar
+
+- Usar la colección de Postman/Thunder Client en `/docs/api-collection.json` (ver sección 5).
+- Antes de dar por "listo" un endpoint, probarlo con `curl` o Postman, no solo desde el navegador.
