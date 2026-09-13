@@ -108,10 +108,10 @@ faspy/
   - [x] `BadgeStatus`: Chips para semáforo de cumplimiento (Verde: Validado, Rojo: 69-B / Alerta, Amarillo: Revisión).
   - [x] `TactileSlider`: Slider de velocidad de factoraje (aforo/días) con riel sunken y thumb pill extruded.
   - [x] `SegmentedControl`: Selector flotante estilo Apple Fluid para cambiar plazos o filtros.
-- [ ] **Tarea 3.2: Módulo Centro de Cumplimiento (`app/dashboard/cumplimiento/`)**
-  - [ ] KPI Ribbon: Tasa de aprobación fiscal, alertas 69-B detectadas, verificación OFAC y tiempo medio de resolución.
-  - [ ] Data Rows táctiles: Listado de facturas procesadas con chips de estado SAT/OFAC/SPEI.
-  - [ ] Detalle expandible/modal: Vista detallada de evidencia de validación (por qué se rechazó o aprobó un RFC).
+- [x] **Tarea 3.2: Módulo Centro de Cumplimiento (`app/dashboard/cumplimiento/`)**
+  - [x] KPI Ribbon: Tasa de aprobación fiscal, alertas 69-B detectadas, verificación OFAC y tiempo medio de resolución.
+  - [x] Data Rows táctiles: Listado de facturas procesadas con chips de estado SAT/OFAC/SPEI.
+  - [x] Detalle expandible/modal: Vista detallada de evidencia de validación (por qué se rechazó o aprobó un RFC).
 - [ ] **Tarea 3.3: Módulo Matriz de Decisión & Underwriting (`app/dashboard/decision/`)**
   - [ ] Simulador Interactivo de Factoraje: Control interactivo para mover monto, plazo o aforo y ver el impacto instantáneo en liquidez vs costo financiero.
   - [ ] Scorecard de Deudor: Gráfico o tabla de ratings (A, B, C, D) con límites de exposición y tasas asignadas.
